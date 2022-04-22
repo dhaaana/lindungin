@@ -21,7 +21,6 @@ class CreateForumsTable extends Migration
             $table->integer('like');
             $table->integer('dislike');
             $table->integer('report');
-            $table->integer('coba');
             $table->timestamps();
         });
     }
