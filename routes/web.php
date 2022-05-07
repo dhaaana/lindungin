@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('navigation');
+    return view('welcome');
 });
 
-Route::get('/forum', function () {
-    return view('halaman-forum');
+Route::get('/contoh', function () {
+    return view('contoh');
 });
