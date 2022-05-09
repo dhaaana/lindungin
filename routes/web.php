@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('halaman-utama');
 });
+
+Route::get('/contoh', function () {
+    return view('contoh');
+});
