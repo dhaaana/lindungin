@@ -256,7 +256,7 @@
             </ul>
         </div>
 
-        <div class="p-3">
+        <div class="p-3 w-100">
             @yield('content')
         </div>
     </div>
