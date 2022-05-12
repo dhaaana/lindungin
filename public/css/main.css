@@ -1,3 +1,14 @@
+button {
+  background-color: inherit;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  font-size: inherit;
+}
+
 .font-inter {
   font-family: "Inter", sans-serif !important;
 }
@@ -7,7 +18,7 @@
 }
 
 .text-xs {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
 }
 
 .text-2xs {
@@ -52,8 +63,6 @@
   background-color: #0ea5e9;
   padding: 0.5rem 1rem;
   border-radius: 0.3rem;
-  font-size: 0.8rem;
-  font-weight: 400;
   color: white;
   text-decoration: inherit;
 }
@@ -63,6 +72,41 @@
   background-color: #0284c7;
   color: white;
   text-decoration: inherit;
+  cursor: pointer;
+}
+
+.btn-orange,
+.btn-orange:link {
+  background-color: #f97316;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  color: white;
+  text-decoration: inherit;
+}
+
+.btn-orange:hover,
+.btn-orange:link:hover {
+  background-color: #ea580c;
+  color: white;
+  text-decoration: inherit;
+  cursor: pointer;
+}
+
+.btn-gray,
+.btn-gray:link {
+  background-color: #cbd5e1;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  color: #334155;
+  text-decoration: inherit;
+}
+
+.btn-gray:hover,
+.btn-gray:link:hover {
+  background-color: #94a3b8;
+  color: #334155;
+  text-decoration: inherit;
+  cursor: pointer;
 }
 
 .btn-toggle {

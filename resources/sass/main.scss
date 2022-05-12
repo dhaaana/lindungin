@@ -1,8 +1,11 @@
 $primary-color: #0ea5e9;
-$primary-color-dark: #0284c7;
+$primary-color-hover: #0284c7;
 $primary-color-light: #e0f2fe;
 $secondary-color: #f97316;
+$secondary-color-hover: #ea580c;
+$light-gray-color: #cbd5e1;
 $gray-color: #94a3b8;
+$dark-gray-color: #334155;
 
 @mixin icons($color, $width) {
     color: $color;
@@ -16,6 +19,32 @@ $gray-color: #94a3b8;
     top: $top;
 }
 
+@mixin button($bg-color, $bg-color-hover, $text-color) {
+    background-color: $bg-color;
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
+    color: $text-color;
+    text-decoration: inherit;
+
+    &:hover {
+        background-color: $bg-color-hover;
+        color: $text-color;
+        text-decoration: inherit;
+        cursor: pointer;
+    }
+}
+
+button {
+    background-color: inherit;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    font-size: inherit;
+}
+
 .font-inter {
     font-family: "Inter", sans-serif !important;
 }
@@ -25,7 +54,7 @@ $gray-color: #94a3b8;
 }
 
 .text-xs {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
 }
 
 .text-2xs {
@@ -63,19 +92,17 @@ $gray-color: #94a3b8;
 
 .btn-blue,
 .btn-blue:link {
-    background-color: $primary-color;
-    padding: 0.5rem 1rem;
-    border-radius: 0.3rem;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: white;
-    text-decoration: inherit;
+    @include button($primary-color, $primary-color-hover, white);
+}
 
-    &:hover {
-        background-color: $primary-color-dark;
-        color: white;
-        text-decoration: inherit;
-    }
+.btn-orange,
+.btn-orange:link {
+    @include button($secondary-color, $secondary-color-hover, white);
+}
+
+.btn-gray,
+.btn-gray:link {
+    @include button($light-gray-color, $gray-color, $dark-gray-color);
 }
 
 // Sidebars
