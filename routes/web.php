@@ -20,10 +20,3 @@ Route::get('/', function () {
 Route::get('/contoh', function () {
     return view('contoh');
 });
-<<<<<<< HEAD
-
-Route::get('/contoh', function () {
-    return view('contoh');
-});
-=======
->>>>>>> ee90e29 (add navbar and sidebar layout)
