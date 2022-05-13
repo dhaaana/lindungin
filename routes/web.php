@@ -20,3 +20,15 @@ Route::get('/', function () {
 Route::get('/contoh', function () {
     return view('contoh');
 });
+
+Route::get('/contoh', function () {
+    return view('contoh');
+});
+
+Route::get('/your-forum', function (){
+    return view('your-forum');
+});
+
+Route::get('/home', function (){
+    return view('halaman-utama');
+});
