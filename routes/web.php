@@ -17,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/namaForum', function () {
     return view('halaman-forum');
 });
+
+Route::get('/contoh', function () {
+    return view('contoh');
+});
+
+Route::get('/forgetPW', function () {
+    return view('halaman-forget');
+});

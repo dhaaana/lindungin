@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+    <title>Lindung.in - @yield('title')</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous">
+</head>
+
+<body class="bg-light font-inter d-flex flex-column">
+    @include('partials.navbar')
+
+
+    {{-- Notification Modal --}}
+    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center text-secondary">There is no notification</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex h-100">
+        @yield('content')
+    </div>
+</body>
+
+<script>
+    let sidebarstate = true
+    let block = "block"
+    let none = "none"
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth < 768) {
+            if (sidebarstate) {
+                sidebarstate = !sidebarstate
+            }
+            document.getElementById("bigSidebar").style.display = none;
+            document.getElementById("smallSidebar").style.display = block;
+        } else if (window.innerWidth > 768) {
+            if (!sidebarstate) {
+                sidebarstate = !sidebarstate
+            }
+            sidebarstate = !sidebarstate
+            document.getElementById("bigSidebar").style.display = block;
+            document.getElementById("smallSidebar").style.display = none;
+        }
+    });
+
+    function toggleNav() {
+        sidebarstate = !sidebarstate
+        document.getElementById("bigSidebar").style.display = sidebarstate ? block : none;
+        document.getElementById("smallSidebar").style.display = sidebarstate ? none : block;
+    }
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
+
+</html>
