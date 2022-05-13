@@ -17,6 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/contoh', function () {
+    return view('contoh');
+});
+
+
 Route::get('/login', function () {
     return view('halamanlogin');
 });
