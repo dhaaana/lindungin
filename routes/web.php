@@ -17,6 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/contoh', function () {
+    return view('contoh');
+});
+
 Route::get('/create', function () {
-    return view('halamancreate');
+    return view('create');
+});
+
+Route::get('/update', function () {
+    return view('update');
 });
