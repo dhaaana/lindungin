@@ -38,3 +38,8 @@ Route::get('/update', function () {
     return view('update');
 });
 
+
+Route::get('/login', function () {
+    return view('halaman-login');
+});
+
