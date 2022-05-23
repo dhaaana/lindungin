@@ -31,6 +31,10 @@ button {
   text-decoration: inherit;
 }
 
+.underline-link:hover {
+  text-decoration: underline;
+}
+
 .avatar {
   border-radius: 100%;
   width: 2rem;
@@ -167,6 +171,8 @@ button {
   position: sticky;
   top: 0;
   height: 9vh;
+  width: 100%;
+  z-index: 10;
 }
 
 .sticky-sidebar {
@@ -174,5 +180,23 @@ button {
   position: sticky;
   top: 9vh;
   transition: all;
+}
+
+.sticky-right-side {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 14vh;
+  height: 9vh;
+}
+
+.post-icons {
+  padding: 6px;
+}
+
+.post-icons:hover {
+  padding: 6px;
+  background-color: #e0f2fe;
+  color: #0ea5e9;
+  border-radius: 6px;
 }
 
