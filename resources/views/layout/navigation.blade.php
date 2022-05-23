@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="css/richtext.min.css">
     <script src="js/jquery.richtext.min.js"></script>
 
+
 </head>
 
 <body class="bg-light font-inter d-flex flex-column">
