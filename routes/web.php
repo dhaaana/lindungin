@@ -39,3 +39,7 @@ Route::get('/update', function () {
 });
 
 
+Route::get('/login', function () {
+    return view('halaman-login');
+});
+
