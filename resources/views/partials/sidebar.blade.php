@@ -77,7 +77,7 @@
 </div>
 
 {{-- Big Sidebar --}}
-<div id="bigSidebar" class="p-3 bg-white shadow-sm sticky-sidebar" style="width: 280px; height: 91vh">
+<div id="bigSidebar" class="p-3 bg-white shadow-sm sticky-sidebar" style="min-width: 280px; height: 91vh">
     <ul class="list-unstyled ps-0">
         <li class="mb-2 h-100 text-xs text-secondary ms-3 fw-bold">
             Search

@@ -67,6 +67,10 @@ button {
     text-decoration: inherit;
 }
 
+.underline-link:hover {
+    text-decoration: underline;
+}
+
 .avatar {
     border-radius: 100%;
     width: 2rem;
@@ -105,7 +109,7 @@ button {
     @include button($light-gray-color, $gray-color, $dark-gray-color);
 }
 
-// Sidebars
+// Sidebars and Navbar
 .btn-toggle {
     display: inline-flex;
     align-items: center;
@@ -159,9 +163,27 @@ button {
 .sticky-navbar {
     @include sticky($top: 0);
     height: 9vh;
+    width: 100%;
+    z-index: 10;
 }
 
 .sticky-sidebar {
     @include sticky($top: 9vh);
     transition: all;
+}
+
+.sticky-right-side {
+    @include sticky($top: 14vh);
+    height: 9vh;
+}
+
+//Post
+.post-icons {
+    padding: 6px;
+    &:hover {
+        padding: 6px;
+        background-color: $primary-color-light;
+        color: $primary-color;
+        border-radius: 6px;
+    }
 }

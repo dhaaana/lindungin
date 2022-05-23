@@ -23,6 +23,9 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 </head>
 
 <body class="bg-light font-inter d-flex flex-column">
@@ -45,7 +48,7 @@
         </div>
     </div>
 
-    <div class="d-flex h-100">
+    <div class="d-flex w-100">
         @yield('content')
     </div>
 </body>
@@ -55,7 +58,7 @@
     let block = "block"
     let none = "none"
 
-    window.addEventListener("resize", () => {
+    function handleSidebar() {
         if (window.innerWidth < 768) {
             if (sidebarstate) {
                 sidebarstate = !sidebarstate
@@ -70,7 +73,10 @@
             document.getElementById("bigSidebar").style.display = block;
             document.getElementById("smallSidebar").style.display = none;
         }
-    });
+    }
+
+    handleSidebar()
+    window.addEventListener("resize", handleSidebar)
 
     function toggleNav() {
         sidebarstate = !sidebarstate

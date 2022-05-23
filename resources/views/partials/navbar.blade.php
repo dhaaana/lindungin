@@ -1,4 +1,4 @@
- <nav class="bg-white shadow-sm sticky-navbar">
+ <nav class="bg-white shadow-sm sticky-navbar w-100">
      <div class="container-fluid px-md-5 h-100 d-flex justify-content-between align-items-center">
          <a class="navbar-brand d-flex link-unstyled" href="#">
              <div class="px-2 fw-bold bg-blue text-white">LINDUNG</div>
