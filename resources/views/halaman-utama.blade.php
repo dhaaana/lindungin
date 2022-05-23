@@ -45,7 +45,7 @@
                             </div>
                             <div class="mt-4">
                                 <div class="d-flex flex-lg-row flex-column-reverse gap-2 justify-content-between">
-                                    <a class="link-unstyled underline-link" href="#">
+                                    <a class="link-unstyled underline-link text-dark" href="/nama-forum">
                                         <h5 class="fw-bold">Apakah ada kasus korupsi di gelaran Formula E
                                             Jakarta?
                                         </h5>

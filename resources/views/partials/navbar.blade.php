@@ -1,11 +1,11 @@
  <nav class="bg-white shadow-sm sticky-navbar w-100">
      <div class="container-fluid px-md-5 h-100 d-flex justify-content-between align-items-center">
-         <a class="navbar-brand d-flex link-unstyled" href="#">
+         <a class="navbar-brand d-flex link-unstyled" href="/">
              <div class="px-2 fw-bold bg-blue text-white">LINDUNG</div>
              <div class="px-1 fw-bold text-black">.in</div>
          </a>
          <div class="d-flex gap-4 align-items-center">
-             <a class="btn-blue d-none d-md-flex" href="#" style="font-size: 0.8rem; font-weight: 400;">
+             <a class="btn-blue d-none d-md-flex" href="/create" style="font-size: 0.8rem; font-weight: 400;">
                  <span><svg xmlns="http://www.w3.org/2000/svg" class="plus-icons" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor" stroke-width="2">
                          <path stroke-linecap="round" stroke-linejoin="round"
