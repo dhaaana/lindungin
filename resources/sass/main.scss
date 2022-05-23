@@ -53,6 +53,16 @@ button {
     background-color: $primary-color;
 }
 
+.bg-light-blue {
+    background-color: $primary-color-light;
+}
+
+.border-blue {
+    border: solid;
+    border-width: 2px;
+    border-color: $primary-color;
+}
+
 .text-xs {
     font-size: 0.75rem;
 }
@@ -187,3 +197,8 @@ button {
         border-radius: 6px;
     }
 }
+
+.verified-icons {
+    @include icons($primary-color, 2rem);
+}
+
