@@ -25,7 +25,16 @@ Route::get('/your-forum', function (){
     return view('your-forum');
 });
 
-
 Route::get('/nama-forum', function () {
     return view('halaman-forum');
+
 });
+
+Route::get('/create', function () {
+    return view('create');
+});
+
+Route::get('/update', function () {
+    return view('update');
+});
+
