@@ -24,3 +24,8 @@ Route::get('/contoh', function () {
 Route::get('/your-forum', function (){
     return view('your-forum');
 });
+
+
+Route::get('/nama-forum', function () {
+    return view('halaman-forum');
+});

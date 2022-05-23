@@ -17,6 +17,16 @@ button {
   background-color: #0ea5e9;
 }
 
+.bg-light-blue {
+  background-color: #e0f2fe;
+}
+
+.border-blue {
+  border: solid;
+  border-width: 2px;
+  border-color: #0ea5e9;
+}
+
 .text-xs {
   font-size: 0.75rem;
 }
@@ -198,5 +208,11 @@ button {
   background-color: #e0f2fe;
   color: #0ea5e9;
   border-radius: 6px;
+}
+
+.verified-icons {
+  color: #0ea5e9;
+  width: 2rem;
+  cursor: pointer;
 }
 
