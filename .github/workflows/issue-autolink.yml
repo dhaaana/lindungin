@@ -11,6 +11,12 @@ jobs:
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
 <<<<<<< HEAD
+<<<<<<< HEAD
+          branch-prefix: "i"
+=======
+          branch-prefix: "issue"
+>>>>>>> 5cc6ff14360b4c787ecf5de7be8900a76bdd1d4a
+=======
           branch-prefix: "issue"
 =======
 <<<<<<< HEAD
@@ -19,4 +25,8 @@ jobs:
           branch-prefix: "issue"
 >>>>>>> 5cc6ff14360b4c787ecf5de7be8900a76bdd1d4a
 >>>>>>> 1bdf0675d38b5ef58bbebe05b4a54c10f2f6c54c
+<<<<<<< HEAD
+=======
+>>>>>>> 3f7589316a10367f2c2e1ab7e8a902fcc5bcc817
+>>>>>>> addd285c5c3137f9d0315cea194fdcdbb5eef93e
           resolve: "true"

@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9">
-                    @for ($i = 0; $i < 2; $i++)
+                    @foreach ($yourforum as $forum)
                         <div class="card mb-3 w-100">
                             <div class="row g-0">
                                 <div class="col-md-4 p-2">
@@ -46,9 +46,7 @@
                                     <div class="card-body">
                                         <a class="link-unstyled underline-link" href="#">
 
-                                            <h5 class="card-title text-dark">Adakah penyanyi yang suaranya tidak enak tapi
-                                                karena
-                                                massa pendukungnya loyal dia masih eksis sampai sekarang?</h5>
+                                            <h5 class="card-title text-dark">{{$forum->title}}</h5>
                                         </a>
                                         <p class="card-text"><small class="text-muted">Last updated 3 mins
                                                 ago</small>
@@ -61,54 +59,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card mb-3 w-100">
-                            <div class="row g-0">
-                                <div class="col-md-4 p-2">
-                                    <img src="https://asset.indosport.com/article/image/q/80/292889/ilustrasi_formula_e_jadi_di_jakarta1-169.jpg?w=750&h=423"
-                                        class="img-fluid rounded h-100" alt="pict">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <a class="link-unstyled underline-link" href="#">
-                                            <h5 class="card-title text-dark">Vaksin covid Novavax mengandung DNA laba-laba
-                                            </h5>
-                                        </a>
-                                        <p class="card-text"><small class="text-muted">Last updated 7 days
-                                                ago</small>
-                                        </p>
-                                        <div class="d-flex justify-content-end gap-2">
-                                            <button class="btn btn-success">Update</button>
-                                            <button class="btn btn-danger">Delete</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-3 w-100">
-                            <div class="row g-0">
-                                <div class="col-md-4 p-2">
-                                    <img src="https://asset.indosport.com/article/image/q/80/292889/ilustrasi_formula_e_jadi_di_jakarta1-169.jpg?w=750&h=423"
-                                        class="img-fluid rounded h-100" alt="pict">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <a class="link-unstyled underline-link" href="#">
-
-                                            <h5 class="card-title text-dark">Apakah mudik 2022 harus vaksin tiga kali?
-                                            </h5>
-                                        </a>
-                                        <p class="card-text"><small class="text-muted">Last updated 26 days
-                                                ago</small>
-                                        </p>
-                                        <div class="d-flex justify-content-end gap-2">
-                                            <button class="btn btn-success">Update</button>
-                                            <button class="btn btn-danger">Delete</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endfor
+                    @endforeach
 
                 </div>
                 <div class="col-lg-3 mb-3 d-none d-lg-block sticky-right-side">

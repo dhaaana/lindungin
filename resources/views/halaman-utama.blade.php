@@ -13,7 +13,7 @@
                         <button class="btn-orange text-xs p-1 px-2 rounded-pill">Hot</button>
                         <button class="btn-gray text-xs p-1 px-2 rounded-pill">Closed</button>
                     </div>
-                    @for ($i = 0; $i < 4; $i++)
+                    @foreach ($allforum as $forum)
                         <div class="card p-4 mb-3">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex flex-wrap align-items-center gap-3">
@@ -46,25 +46,14 @@
                             <div class="mt-4">
                                 <div class="d-flex flex-lg-row flex-column-reverse gap-2 justify-content-between">
                                     <a class="link-unstyled underline-link text-dark" href="/nama-forum">
-                                        <h5 class="fw-bold">Apakah ada kasus korupsi di gelaran Formula E
-                                            Jakarta?
-                                        </h5>
+                                        <h5 class="fw-bold">{{$forum->title}}</h5>
                                     </a>
                                     <div>
                                         <span class="badge bg-light rounded-pill text-dark"><span
                                                 class="badge bg-danger rounded-pill me-1">X</span>Hoax</span>
                                     </div>
                                 </div>
-                                <p>
-                                    Saya baru baru ini baca di internet, katanya tercium bau bau korupsi dalam
-                                    penyelenggaraannya. Apakah
-                                    benar demikian? Mohon informasinya terima kasih
-                                </p>
-                                <div class="d-flex justify-content-center">
-                                    <img class="img-fluid"
-                                        src="https://asset.indosport.com/article/image/q/80/292889/ilustrasi_formula_e_jadi_di_jakarta1-169.jpg?w=750&h=423"
-                                        alt="Formula E Jakarta">
-                                </div>
+                                {!!$forum->body!!}
                             </div>
                             <div
                                 class="mt-4 d-flex flex-lg-row flex-column justify-content-between align-items-sm-center border-0">
@@ -72,11 +61,11 @@
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="d-flex align-items-center gap-1">
                                         <button class="fa fa-thumbs-o-up post-icons"></button>
-                                        <p class="m-0 text-muted">546</p>
+                                        <p class="m-0 text-muted">{{$forum->like}}</p>
                                     </div>
                                     <div class="d-flex align-items-center gap-2">
                                         <button class="fa fa-thumbs-o-down post-icons"></button>
-                                        <p class="m-0 text-muted">457</p>
+                                        <p class="m-0 text-muted">{{$forum->dislike}}</p>
                                     </div>
                                     <div class="d-flex align-items-center gap-2">
                                         <button class="fa fa-comment-o post-icons"></button>
@@ -85,7 +74,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endfor
+                    @endforeach
 
                 </div>
                 <div class="col-lg-3 mb-3 d-none d-lg-block sticky-right-side">

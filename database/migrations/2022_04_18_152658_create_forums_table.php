@@ -17,6 +17,7 @@ class CreateForumsTable extends Migration
             $table->id('idForum');
             $table->string('idUser');
             $table->string('title');
+            $table->string('category');
             $table->text('body');
             $table->integer('like');
             $table->integer('dislike');
