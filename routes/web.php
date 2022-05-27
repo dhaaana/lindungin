@@ -34,13 +34,10 @@ Route::post('/like/{id}', [ForumController::class, 'addLike']);
 
 Route::post('/dislike/{id}', [ForumController::class, 'addDislike']);
 
-Route::get('/create', function () {
-    return view('create');
-});
+Route::get('/create', [ForumController::class, 'displayCreatePage']);
+Route::post('/create', [ForumController::class, 'saveAndAdd']);
+Route::get('/update/{id}', [ForumController::class, 'displayUpdatePage']);
 
-Route::get('/update', function () {
-    return view('update');
-});
 
 
 Route::get('/login', function () {
