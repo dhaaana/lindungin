@@ -17,6 +17,16 @@ button {
   background-color: #0ea5e9;
 }
 
+.bg-light-blue {
+  background-color: #e0f2fe;
+}
+
+.border-blue {
+  border: solid;
+  border-width: 2px;
+  border-color: #0ea5e9;
+}
+
 .text-xs {
   font-size: 0.75rem;
 }
@@ -29,6 +39,10 @@ button {
 .link-unstyled:hover {
   color: inherit;
   text-decoration: inherit;
+}
+
+.underline-link:hover {
+  text-decoration: underline;
 }
 
 .avatar {
@@ -167,6 +181,8 @@ button {
   position: sticky;
   top: 0;
   height: 9vh;
+  width: 100%;
+  z-index: 10;
 }
 
 .sticky-sidebar {
@@ -174,5 +190,29 @@ button {
   position: sticky;
   top: 9vh;
   transition: all;
+}
+
+.sticky-right-side {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 14vh;
+  height: 9vh;
+}
+
+.post-icons {
+  padding: 6px;
+}
+
+.post-icons:hover {
+  padding: 6px;
+  background-color: #e0f2fe;
+  color: #0ea5e9;
+  border-radius: 6px;
+}
+
+.verified-icons {
+  color: #0ea5e9;
+  width: 2rem;
+  cursor: pointer;
 }
 

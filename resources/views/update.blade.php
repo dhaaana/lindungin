@@ -1,53 +1,201 @@
 @extends('layout.navigation')
-@section('title', 'Contoh')
+@section('title', 'Update Forum')
 
 @section('content')
     @include('partials.sidebar')
-    <div class='p-3 w-100'>
-        <div class="row">
-            <div class="col-12" style="background-color:;">
-                <div class="container">
-                    <div class="row mt-4">
-                        <div class="col-md-8 col-md-offset-2">
-
-
-                            <form action="" method="POST" class="bg-white p-4">
-
-                                <div class="form-group">
-                                    <label for="category">Category <span class="require"></span></label>
-                                    <input class="form-control" list="datalistOptions" id="exampleDataList"
-                                        placeholder="Choose Categories">
-                                    <datalist id="datalistOptions">
-                                        <option value="Kuliner">
-                                        <option value="Kesehatan">
-                                        <option value="Politik">
-                                        <option value="Pendidikan">
-                                        <option value="Sosial">
-                                        <option value="Sosial">
-                                        <option value="Musik">
-                                        <option value="Mode">
-                                        <option value="Film">
-                                        <option value="Fotografi">
-                                    </datalist>
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <label for="title">Title <span class="require"></span></label>
-                                    <input type="text" class="form-control" placeholder="Title" name="title" />
-                                    <br>
-                                    <label for="description">Content</label>
-                                    <textarea rows="5" class="form-control" name="description"></textarea>
-                                </div>
-                                <br>
-                                <div class="d-flex justify-content-end gap-2">
-                                    <button type="submit" class="btn-blue">
-                                        Save and Publish
-                                    </button>
-                                </div>
+    <div class='p-sm-3 w-100'>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-lg-9">
+                    <!--Bootstrap classes arrange web page components into columns and rows in a grid -->
+                    <form action="" method="POST" class="card p-4">
+                        <div class="form-group">
+                            <label for="category" class="mb-2">Category <span class="require"></span></label>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Select Category Here</option>
+                                <option value="1">Kuliner</option>
+                                <option value="2">Kesehatan</option>
+                                <option value="3">Politik</option>
+                                <option value="3">Pendidikan</option>
+                                <option value="3">Sosial</option>
+                            </select>
 
                         </div>
-                        <div class="col-sm-4">.col-sm-4</div>
-                    </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="title" class="mb-2">Title <span class="require"></span></label>
+                            <input type="text" class="form-control" placeholder="Title" name="title" />
+                            <br>
+                            <label class="mb-2" for="description">Content</label>
+                            <textarea rows="5" class="contents form-control" name="description"></textarea>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="button" class="btn-gray">
+                                Save as Draft
+                            </button>
+                            <button type="submit" class="btn-blue">
+                                Publish
+                            </button>
+                        </div>
+
+
+                </div>
+                <div class="col-lg-3 mb-3 d-none d-lg-block sticky-right-side">
+                    @include('partials.rightbar')
                 </div>
             </div>
-        @endsection
+        </div>
+    </div>
+    <script>
+        $('.contents').richText({
+
+            // text formatting
+            bold: true,
+            italic: true,
+            underline: true,
+
+            // text alignment
+            leftAlign: true,
+            centerAlign: true,
+            rightAlign: true,
+            justify: true,
+
+            // lists
+            ol: true,
+            ul: true,
+
+            // title
+            heading: true,
+
+            // fonts
+            fonts: true,
+            fontList: [
+                "Arial",
+                "Arial Black",
+                "Comic Sans MS",
+                "Courier New",
+                "Geneva",
+                "Georgia",
+                "Helvetica",
+                "Impact",
+                "Lucida Console",
+                "Tahoma",
+                "Times New Roman",
+                "Verdana"
+            ],
+            fontColor: true,
+            fontSize: true,
+
+            // uploads
+            imageUpload: true,
+            fileUpload: true,
+
+            // media
+            videoEmbed: true,
+
+            // link
+            urls: true,
+
+            // tables
+            table: true,
+
+            // code
+            removeStyles: true,
+            code: true,
+
+            // colors
+            colors: [],
+
+            // dropdowns
+            fileHTML: '',
+            imageHTML: '',
+
+            // translations
+            translations: {
+                'title': 'Title',
+                'white': 'White',
+                'black': 'Black',
+                'brown': 'Brown',
+                'beige': 'Beige',
+                'darkBlue': 'Dark Blue',
+                'blue': 'Blue',
+                'lightBlue': 'Light Blue',
+                'darkRed': 'Dark Red',
+                'red': 'Red',
+                'darkGreen': 'Dark Green',
+                'green': 'Green',
+                'purple': 'Purple',
+                'darkTurquois': 'Dark Turquois',
+                'turquois': 'Turquois',
+                'darkOrange': 'Dark Orange',
+                'orange': 'Orange',
+                'yellow': 'Yellow',
+                'imageURL': 'Image URL',
+                'fileURL': 'File URL',
+                'linkText': 'Link text',
+                'url': 'URL',
+                'size': 'Size',
+                'responsive': 'Responsive',
+                'text': 'Text',
+                'openIn': 'Open in',
+                'sameTab': 'Same tab',
+                'newTab': 'New tab',
+                'align': 'Align',
+                'left': 'Left',
+                'center': 'Center',
+                'right': 'Right',
+                'rows': 'Rows',
+                'columns': 'Columns',
+                'add': 'Add',
+                'pleaseEnterURL': 'Please enter an URL',
+                'videoURLnotSupported': 'Video URL not supported',
+                'pleaseSelectImage': 'Please select an image',
+                'pleaseSelectFile': 'Please select a file',
+                'bold': 'Bold',
+                'italic': 'Italic',
+                'underline': 'Underline',
+                'alignLeft': 'Align left',
+                'alignCenter': 'Align centered',
+                'alignRight': 'Align right',
+                'addOrderedList': 'Add ordered list',
+                'addUnorderedList': 'Add unordered list',
+                'addHeading': 'Add Heading/title',
+                'addFont': 'Add font',
+                'addFontColor': 'Add font color',
+                'addFontSize': 'Add font size',
+                'addImage': 'Add image',
+                'addVideo': 'Add video',
+                'addFile': 'Add file',
+                'addURL': 'Add URL',
+                'addTable': 'Add table',
+                'removeStyles': 'Remove styles',
+                'code': 'Show HTML code',
+                'undo': 'Undo',
+                'redo': 'Redo',
+                'close': 'Close'
+            },
+
+            // privacy
+            youtubeCookies: false,
+
+            // preview
+            preview: false,
+
+            // placeholder
+            placeholder: 'Write content here..',
+
+            // developer settings
+            useSingleQuotes: false,
+            height: 0,
+            heightPercentage: 0,
+            adaptiveHeight: false,
+            id: "",
+            class: "",
+            useParagraph: false,
+            maxlength: 0,
+            callback: undefined,
+            useTabForNext: false
+        });
+    </script>
+@endsection
