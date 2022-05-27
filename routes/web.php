@@ -25,8 +25,17 @@ Route::get('/contoh', function () {
 
 Route::get('/nama-forum', function () {
     return view('halaman-forum');
-
+Route::get('/your-forum', function (){
+    return view('your-forum');
 });
+
+// By Wahyu
+// UC02.03 Like, Dislike, Report Forum
+Route::get('/{id}', [ForumController::class, 'displayForumPage']);
+
+Route::post('/like/{id}', [ForumController::class, 'addLike']);
+
+Route::post('/dislike/{id}', [ForumController::class, 'addDislike']);
 
 Route::get('/create', [ForumController::class, 'displayCreatePage']);
 Route::post('/create', [ForumController::class, 'saveAndAdd']);
