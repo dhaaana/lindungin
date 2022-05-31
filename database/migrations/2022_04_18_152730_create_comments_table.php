@@ -14,9 +14,9 @@ class CreateCommentsTable extends Migration
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->id('idComment');
-            $table->string('idUser');
-            $table->string('idForum');
+            $table->id('id');
+            $table->foreignId('user_id');
+            $table->foreignId('forum_id');
             $table->text('body');
             $table->integer('like');
             $table->integer('dislike');

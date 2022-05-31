@@ -2,93 +2,42 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
-=======
-use App\Models\Forum;
 use Illuminate\Http\Request;
->>>>>>> a8e4716233b951ddaf88e9ab9d02a7bcdff5f8c1
+use Illuminate\Support\Str;
 use App\Models\Forum;
-use Illuminate\Http\Request;
+use App\Models\Status;
 
 class ForumController extends Controller
 {
-<<<<<<< HEAD
     // By Aldi
     // UC02.01 (Read), Share Forum
     public function displayAllForum() {
-
-        // Mengambil semua forum
-        $allforum = Forum::all();
-        return view('halaman-utama', compact('allforum'));
+        $idUser = 1; //sementara
+        $allforum = Forum::all()->where('isPublished', true)->sortByDesc('created_at');
+        $allstatus = Status::where('user_id', $idUser)->get();
+        return view('halaman-utama', compact('allforum', 'allstatus'));
     }
 
     public function displayYourForum() {
-        $idUser = 1;
-        $yourforum = Forum::where('idUser', $idUser)->get();
-        return view('your-forum', compact('yourforum'));
+        $idUser = 1; //sementara
+        $yourforum = Forum::where('user_id', $idUser)->get()->sortByDesc('created_at');
+        return view('halaman-your-forum', compact('yourforum'));
     }
 
-=======
-    // By wahyu
-    // UC02.02 Post Komentar pada Forum
-    public function check()
-    {
+    public function displayForumPage($slug) {
+        $selectedforum = Forum::where('slug', $slug)->first();
+        $comments = Forum::find($selectedforum->id)->comments;
+
+        return view('halaman-forum', [
+            'forum' => $selectedforum,
+            'comments' => $comments
+        ]);
     }
 
-    public function displayCommentBox()
-    {
-    }
-
-    public function saveComment()
-    {
-    }
-
-    public function displayComment()
-    {
-    }
-
-    // By Wahyu
-    // UC02.03 Like, Dislike, Report Forum
-    public function displayForumPage($id)
-    {
-        // Menampilkan halaman forum yang dipilih
-        $forum = Forum::where("id", $id);
-        return view('halaman-forum', compact('forum'));
-    }
-
-    public function checkUserResponse()
-    {
-    }
-
-    public function addLike($id)
-    {
-        $forum = Forum::find($id);
-        $forum->like = $like++;
-        $forum->save();
-    }
-
-    public function saveLike()
-    {
-    }
-
-    public function addDislike($id)
-    {
-        $forum = Forum::find($id);
-        $forum->dislike = $dislike--;
-        $forum->save();
-    }
-
-    public function saveReport()
-    {
->>>>>>> a8e4716233b951ddaf88e9ab9d02a7bcdff5f8c1
-    //by devi
-    //UC02.04 Create forum
-    public function displayCreatePage ( ) {
-        return view('create');
-    }
-
-    public function displayNewForumPage ($id) {
-        //nanti
+    //by Devi
+    //UC02.04 Create Forum
+    public function displayCreatePage() {
+        return view('halaman-create');
     }
 
     public function saveAndAdd(Request $request) {
@@ -97,101 +46,102 @@ class ForumController extends Controller
             'body' => 'required',
             'category' => 'required',
         ]);
-        $forum = Forum::create([
-            'idUser' => 1,
+        Forum::create([
+            'user_id' => 1,
             'title' => $request->title,
             'body' => $request->body,
             'category' => $request->category,
+            'slug' => Str::slug($request->title),
+            'isPublished' => true,
             'like' => 0,
             'dislike' => 0,
             'report' => 0,
         ]);
-        $newForumID = Forum::latest()->first();
-        return redirect('/')->with('success','Forum Berhasil di Input');
+        $newforumSlug = Forum::latest()->first()->slug;
+        return redirect('/forum/'.$newforumSlug);
     }
 
-    public function saveDraft () {
-        //nanti
+    public function saveDraft(Request $request) {
+        $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'category' => 'required',
+        ]);
+
+       Forum::create([
+            'user_id' => 1,
+            'title' => $request->title,
+            'body' => $request->body,
+            'category' => $request->category,
+            'slug' => Str::slug($request->title),
+            'isPublished' => false,
+            'like' => 0,
+            'dislike' => 0,
+            'report' => 0,
+        ]);
+
+        return redirect('/your-forum');
     }
-
-    public function getDraft () {
-        //nanti
-    }
-
-
 
     //UC02.05 Update/Delete Forum
-    public function displayUpdatePage ($id) {
-        $selectedForum = Forum::where('idForum', $id)->first();
-        return view('update', [
-            'selectedForum' => $selectedForum
+    public function displayUpdatePage($id) {
+        $selectedforum = Forum::find($id);
+        return view('halaman-update', ['forum' => $selectedforum]);
+    }
+
+    public function saveNew(Request $request) {
+        $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'category' => 'required',
         ]);
-        // return view('update');
+
+        $selectedforum = Forum::find($request->idForum);
+
+        Forum::where('id',$request->idForum)->update([
+            'user_id' => $selectedforum->user_id,
+            'title' => $request->title,
+            'body' => $request->body,
+            'category' => $request->category,
+            'slug' => Str::slug($request->title),
+            'isPublished' => true,
+            'like' => $selectedforum->like,
+            'dislike' => $selectedforum->dislike,
+            'report' => $selectedforum->report,
+        ]);
+
+        $selectedforumSlug = Forum::find($request->idForum)->slug;
+
+        return redirect('/forum/'.$selectedforumSlug);
     }
 
-    public function saveNew () {
+    public function saveNewDraft(Request $request) {
+        $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'category' => 'required',
+        ]);
 
+        $selectedforum = Forum::find($request->idForum)->first();
+
+        Forum::where('id',$request->idForum)->update([
+            'user_id' => $selectedforum->user_id,
+            'title' => $request->title,
+            'body' => $request->body,
+            'category' => $request->category,
+            'slug' => Str::slug($request->title),
+            'isPublished' => false,
+            'like' => $selectedforum->like,
+            'dislike' => $selectedforum->dislike,
+            'report' => $selectedforum->report,
+        ]);
+
+        return redirect('/your-forum');
     }
 
-    public function displayConfirmation () {
+    public function deleteForum($id) {
+        Forum::find($id)->delete();
 
-    }
-
-    public function deleteForum () {
-
-    }
-
-    public function displayYourForumPage () {
-
-    }
-
-    public function displayForumPage () {
-
+        return redirect('/your-forum');
     }
 }
-// By Aldi
-// UC02.01 Read, (Share) Forum
-// {
-//     //public function shareForum() {
-
-
-//     }
-// }
-
-
-// By Aldi
-// UC02.06 (Search), Category, Filter Forum
-
-// public function searchForum(Request $request)
-//     {
-//         $keyword = $request->search;
-//         $forum = User::where('name', 'like', "%" . $keyword . "%")->paginate(5);
-//         return view('selected.forum', compact('users'))->with('i', (request()->input('page', 1) - 1) * 5);
-//     }
-
-//     public function searchForum(Request $request)
-// {
-// 	// menangkap data pencarian
-// 	$cari = $request->cari;
-
-//  	// mengambil data dari table pegawai sesuai pencarian data
-// 	$forum = DB::table('forum')
-// 	->where('pegawai_nama','like',"%".$cari."%")
-// 	->paginate();
-
-//     	// mengirim data pegawai ke view index
-// 	return view('index',['forum' => $forum]);
-
-// }
-
-// By Aldi
-// UC02.06 Search, (Category), Filter Forum
-// {
-//     public function categoryForum()
-
-//     {
-//          // Mengambil forum sesuai category dan menampilkan di halaman category
-//         $allforum = Forum::latest()->paginate(10);
-//         return view('halaman-utama', compact('allforum'));
-//     }
-// }

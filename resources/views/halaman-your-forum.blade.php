@@ -39,21 +39,28 @@
                         <div class="card mb-3 w-100">
                             <div class="row g-0">
                                 <div class="col-md-4 p-2">
-                                    <img src="https://asset.indosport.com/article/image/q/80/292889/ilustrasi_formula_e_jadi_di_jakarta1-169.jpg?w=750&h=423"
+                                    <img src="https://www.howardluksmd.com/wp-content/uploads/2021/10/featured-image-placeholder-728x404.jpg"
                                         class="img-fluid rounded h-100" alt="pict">
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <a class="link-unstyled underline-link" href="#">
-
-                                            <h5 class="card-title text-dark">{{$forum->title}}</h5>
+                                        <a class="link-unstyled" href="#">
+                                            <h5 class="card-title text-dark">{{ $forum->title }}
+                                                @if ($forum->isPublished == false)
+                                                    <span class="badge bg-secondary">Unpublished</span>
+                                                @endif
+                                            </h5>
                                         </a>
                                         <p class="card-text"><small class="text-muted">Last updated 3 mins
                                                 ago</small>
                                         </p>
                                         <div class="d-flex justify-content-end gap-2">
-                                            <button class="btn btn-success">Update</button>
-                                            <button class="btn btn-danger">Delete</button>
+                                            <a href={{ '/update/forum/' . $forum->id }}>
+                                                <button class="btn btn-success">Update</button>
+                                            </a>
+                                            <a href={{ 'delete/forum/' . $forum->id }}>
+                                                <button class="btn btn-danger">Delete</button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -90,34 +97,6 @@
                         </div>
                     </div>
                 </div>
-
-
-                <!-- End of post 2 -->
-                {{-- <div class="col-lg-9 mb-3">
-                    <div
-                        class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">
-                        <div class="row align-items-center">
-                            <div class="col-md-8 mb-3 mb-sm-0">
-                                <h5>
-                                    <a href="#" class="text-primary">Apa yang normal di jakarta tapi tidak ada di tempat
-                                        lain?</a>
-                                </h5>
-                                <p class="text-sm"><span class="op-6">Posted</span> <a
-                                        class="text-black" href="#">45 minutes</a> <span
-                                        class="op-6">ago</span></p>
-                            </div>
-                            <div class="col-md-4 op-7">
-
-                                <div class="justify-content-center align-items-center d-flex flex-column gap-2">
-                                    <button class="btn btn-danger w-50">DELETE</button>
-                                    <button class="btn btn-success w-50">UPDATE</button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-
             </div>
         </div>
     </div>

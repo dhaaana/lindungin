@@ -45,31 +45,37 @@
                             </div>
                             <div class="mt-4">
                                 <div class="d-flex flex-lg-row flex-column-reverse gap-2 justify-content-between">
-                                    <a class="link-unstyled underline-link text-dark" href="/nama-forum">
-                                        <h5 class="fw-bold">{{$forum->title}}</h5>
+                                    <a class="link-unstyled underline-link text-dark" href={{ '/forum/' . $forum->slug }}>
+                                        <h5 class="fw-bold">{{ $forum->title }}</h5>
                                     </a>
                                     <div>
                                         <span class="badge bg-light rounded-pill text-dark"><span
                                                 class="badge bg-danger rounded-pill me-1">X</span>Hoax</span>
                                     </div>
                                 </div>
-                                {!!$forum->body!!}
+                                <div class="mw-100">
+                                    {!! $forum->body !!}
+                                </div>
                             </div>
                             <div
                                 class="mt-4 d-flex flex-lg-row flex-column justify-content-between align-items-sm-center border-0">
-                                <div class="text-muted h7 m-0"> <i class="fa fa-clock-o me-1"></i>15 Februari 2022</div>
+                                <div class="text-muted h7 m-0"> <i
+                                        class="fa fa-clock-o me-1"></i>{{ \Carbon\Carbon::parse($forum->created_at)->format('j F Y') }}
+                                </div>
                                 <div class="d-flex align-items-center gap-3">
+                                    @foreach($forum->status->where)
                                     <div class="d-flex align-items-center gap-1">
-                                        <button class="fa fa-thumbs-o-up post-icons"></button>
-                                        <p class="m-0 text-muted">{{$forum->like}}</p>
+                                        <button class="fa fa-thumbs-o-up post-icons-disabled"></button>
+                                        <p class="m-0 text-muted">{{ $forum->like }}</p>
                                     </div>
+                                    @endforeach
                                     <div class="d-flex align-items-center gap-2">
                                         <button class="fa fa-thumbs-o-down post-icons"></button>
-                                        <p class="m-0 text-muted">{{$forum->dislike}}</p>
+                                        <p class="m-0 text-muted">{{ $forum->dislike }}</p>
                                     </div>
                                     <div class="d-flex align-items-center gap-2">
                                         <button class="fa fa-comment-o post-icons"></button>
-                                        <p class="m-0 text-muted">12</p>
+                                        <p class="m-0 text-muted">{{ $forum->comments->count() }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -82,66 +88,5 @@
                 </div>
             </div>
         </div>
-        {{-- Post --}}
-        {{-- <div class="card gedf-card my-4">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="mr-2">
-                                        <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                                    </div>
-                                    <div class="ml-2">
-                                        <div class="h5 m-0">@aldimaulana</div>
-                                        <div class="h7 text-muted">Maulana Ahmadi</div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="dropdown">
-                                        <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-h"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
-                                            <div class="h6 dropdown-header">Configuration</div>
-                                            <a class="dropdown-item" href="#">Save</a>
-                                            <a class="dropdown-item" href="#">Hide</a>
-                                            <a class="dropdown-item" href="#">Report</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                        </div>
-                        <div class="card-body">
-                            <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> 10 min ago</div>
-                            <a class="card-link" href="#">
-                                <h5 class="card-title"> Apakah ada kasus korupsi di gelaran Formula E Jakarta?</h5>
-                            </a>
-
-                            <p class="card-text">
-                                Saya baru baru ini baca di internet, katanya tercium bau bau korupsi dalam
-                                penyelenggaraannya. Apakah
-                                benar demikian? Mohon informasinya terima kasih
-                            </p>
-                            <div class="d-flex justify-content-center">
-                                <img src="https://asset.indosport.com/article/image/q/80/292889/ilustrasi_formula_e_jadi_di_jakarta1-169.jpg?w=750&h=423"
-                                    alt="Formula E Jakarta">
-                            </div>
-                            <div>
-                                <span class="badge badge-primary">JavaScript</span>
-                                <span class="badge badge-primary">Android</span>
-                                <span class="badge badge-primary">PHP</span>
-                                <span class="badge badge-primary">Node.js</span>
-                                <span class="badge badge-primary">Ruby</span>
-                                <span class="badge badge-primary">Paython</span>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
-                            <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-                            <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-                        </div>
-                    </div> --}}
-    </div>
-
-@endsection
+    @endsection

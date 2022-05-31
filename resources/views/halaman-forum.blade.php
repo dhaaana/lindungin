@@ -1,5 +1,5 @@
 @extends('layout.navigation')
-@section('title', 'Apakah ada kasus korupsi di gelaran Formula E Jakarta?')
+@section('title', $forum->title)
 
 @section('content')
     @include('partials.sidebar')
@@ -32,30 +32,26 @@
                         </div>
                         <div class="mt-sm-4 mt-2">
                             <a class="link-unstyled underline-link" href="#">
-                                <h5 class="fw-bold text-dark">Apakah ada kasus korupsi di gelaran Formula E
-                                    Jakarta?
-                                </h5>
+                                <h5 class="fw-bold text-dark">{{ $forum->title }}</h5>
                             </a>
-                            <p>
-                                Saya baru baru ini baca di internet, katanya tercium bau bau korupsi dalam
-                                penyelenggaraannya. Apakah
-                                benar demikian? Mohon informasinya terima kasih
-                            </p>
-                            <div class="d-flex justify-content-center mb-2">
+                            <div class="mw-100">
+                                {!! $forum->body !!}
+                            </div>
+                            {{-- <div class="d-flex justify-content-center mb-2">
                                 <img class="img-fluid"
                                     src="https://asset.indosport.com/article/image/q/80/292889/ilustrasi_formula_e_jadi_di_jakarta1-169.jpg?w=750&h=423"
                                     alt="Formula E Jakarta">
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="mt-1 d-flex justify-content-between align-items-sm-center border-0">
                             <div class="d-flex align-items-center gap-sm-3">
                                 <div class="d-flex align-items-center gap-sm-2">
                                     <button class="fa fa-thumbs-o-up post-icons"></button>
-                                    <p class="m-0 text-muted">546</p>
+                                    <p class="m-0 text-muted">{{ $forum->like }}</p>
                                 </div>
                                 <div class="d-flex align-items-center gap-sm-2">
                                     <button class="fa fa-thumbs-o-down post-icons"></button>
-                                    <p class="m-0 text-muted">457</p>
+                                    <p class="m-0 text-muted">{{ $forum->dislike }}</p>
                                 </div>
                                 <div class="d-flex align-items-center gap-sm-2">
                                     <button class="fa fa-comment-o post-icons"></button>
@@ -86,10 +82,15 @@
                     <h5 class="fw-bold text-center my-4 text-secondary">Comments</h5>
                     {{-- Comments Input --}}
                     <div class="card p-4 mb-3">
-                        <textarea class="comments" name="aa" id="aa" cols="30" rows="10"></textarea>
-                        <div class="mt-4 d-flex justify-content-end">
-                            <button class="btn-blue"><i class="fa fa-comment-o px-2"></i>Comment</button>
-                        </div>
+                        <form action={{ '/forum/' . $forum->id . '/comment' }} method="post">
+                            @csrf
+                            <input type="text" name="idForum" value="{{ $forum->id }}" hidden>
+                            <textarea class="comments" name="body" id="body" cols="30" rows="10"></textarea>
+                            <div class="mt-4 d-flex justify-content-end">
+                                <button type="submit" class="btn-blue"><i
+                                        class="fa fa-comment-o px-2"></i>Comment</button>
+                            </div>
+                        </form>
                     </div>
 
                     {{-- Pinned Comments --}}
@@ -173,7 +174,7 @@
 
                     {{-- All Comments --}}
                     <h5 class="my-4 text-secondary">All Comments (12)</h5>
-                    @for ($i = 0; $i < 4; $i++)
+                    @foreach ($forum->comments as $comment)
                         <div class="card p-4 mb-3">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex flex-shrink align-items-center gap-3">
@@ -194,10 +195,7 @@
                             </div>
                             <div class="mt-3">
                                 <div>
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum blanditiis numquam ut
-                                    atque
-                                    facilis officiis vero ipsum eius. Obcaecati illo inventore et. Fugit rem quis corporis
-                                    laboriosam, magni dolore nesciunt.
+                                    {!! $comment->body !!}
                                 </div>
                             </div>
                             <div class="mt-1 d-flex justify-content-between align-items-sm-center border-0">
@@ -235,7 +233,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endfor
+                    @endforeach
 
                     {{-- Report Modal --}}
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"

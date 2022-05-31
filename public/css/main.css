@@ -210,6 +210,14 @@ button {
   border-radius: 6px;
 }
 
+.post-icons-disabled {
+  padding: 6px;
+  background-color: #e0f2fe;
+  color: #0ea5e9;
+  border-radius: 6px;
+  cursor: default;
+}
+
 .verified-icons {
   color: #0ea5e9;
   width: 2rem;
