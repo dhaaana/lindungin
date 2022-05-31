@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,38 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('halaman-utama');
+});
+
+Route::get('/contoh', function () {
+    return view('contoh');
+});
+
+Route::get('/your-forum', function (){
+    return view('your-forum');
+});
+
+Route::get('/nama-forum', function () {
+    return view('halaman-forum');
+
+});
+
+Route::get('/create', function () {
+    return view('create');
+});
+
+Route::get('/update', function () {
+    return view('update');
+});
+
+
+Route::get('/masuk', function () {
+    return view('halaman-login');
+});
+
+Route::get('/register', [RegisterController::class, 'display']);
+Route::post('/register', [RegisterController::class, 'saveUserData']);
+
+Route::get('/lupapassword', function () {
+    return view('halaman-lupa-password');
 });
