@@ -63,12 +63,12 @@
                                         class="fa fa-clock-o me-1"></i>{{ \Carbon\Carbon::parse($forum->created_at)->format('j F Y') }}
                                 </div>
                                 <div class="d-flex align-items-center gap-3">
-                                    @foreach($forum->status->where)
+
                                     <div class="d-flex align-items-center gap-1">
                                         <button class="fa fa-thumbs-o-up post-icons-disabled"></button>
                                         <p class="m-0 text-muted">{{ $forum->like }}</p>
                                     </div>
-                                    @endforeach
+
                                     <div class="d-flex align-items-center gap-2">
                                         <button class="fa fa-thumbs-o-down post-icons"></button>
                                         <p class="m-0 text-muted">{{ $forum->dislike }}</p>

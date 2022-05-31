@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 use App\Models\Forum;
 use App\Models\Status;
 
+
+
 class ForumController extends Controller
 {
     // By Aldi
@@ -25,12 +27,14 @@ class ForumController extends Controller
     }
 
     public function displayForumPage($slug) {
+        $idUser = 1;
         $selectedforum = Forum::where('slug', $slug)->first();
         $comments = Forum::find($selectedforum->id)->comments;
-
+        $allstatus = Status::where('user_id', $idUser)->get();
         return view('halaman-forum', [
             'forum' => $selectedforum,
-            'comments' => $comments
+            'comments' => $comments,
+            'allstatus' => $allstatus
         ]);
     }
 

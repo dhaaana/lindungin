@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,10 +26,10 @@ Route::get('/update/forum/{id}', [ForumController::class, 'displayUpdatePage']);
 Route::post('/update/forum/{id}', [ForumController::class, 'saveNew']);
 Route::post('/update/forum/{id}/draft', [ForumController::class, 'saveNewDraft']);
 Route::get('/delete/forum/{id}', [ForumController::class, 'deleteForum']);
-Route::post('/like/forum/{id}', [ForumController::class, 'addLike']);
-Route::post('/unlike/forum/{id}', [ForumController::class, 'removeLike']);
-Route::post('/dislike/forum/{id}', [ForumController::class, 'addDislike']);
-Route::post('/undislike/forum/{id}', [ForumController::class, 'removeDislike']);
+Route::post('forum/like/{id}/{comment_id?}', [StatusController::class, 'addLike']);
+Route::post('forum/unlike/{id}/{status_id}/{comment_id?}', [StatusController::class, 'removeLike']);
+Route::post('forum/dislike/{id}/{comment_id?}', [StatusController::class, 'addDislike']);
+Route::post('forum/undislike/{id}/{status_id}/{comment_id?}', [StatusController::class, 'removeDislike']);
 Route::post('/forum/{slug}/comment', [CommentController::class, 'saveComment']);
 
 
