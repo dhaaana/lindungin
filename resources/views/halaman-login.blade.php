@@ -14,13 +14,10 @@
                             <!-- Email input -->
                             <div class="form-floating mb-3">
                                 <input type="text" name="email" required class="form-control" id="floatingInput" placeholder="dhana">
-                                <label for="floatingInput">Username</label>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Please provide a valid username!
-                                </div>
+                                <label for="floatingInput">Email</label>
+                                @error('email')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <!-- Password input -->
@@ -28,13 +25,11 @@
                                 <input type="password" name="password" required class="form-control" id="floatingInput"
                                     placeholder="dhana">
                                 <label for="floatingInput">Password</label>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Please provide a valid password!
-                                </div>
+                                @error('password')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
+
                             <div class="d-flex justify-content-center">
                                 <!-- Submit button -->
                                 <button type="submit" class="btn-blue w-100">Login</button>
@@ -58,25 +53,4 @@
             </div>
         </div>
     </div>
-    <script>
-        (function() {
-            'use strict'
-
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.querySelectorAll('.needs-validation')
-
-            // Loop over them and prevent submission
-            Array.prototype.slice.call(forms)
-                .forEach(function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
-
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-        })()
-    </script>
 @endsection

@@ -44,9 +44,6 @@ class RegisterController extends Controller
             'repeatPassword' => 'required'
         ]);
 
-
-
-
         $user = new User();
         $user->fill([
             $user->username = $validated['username'],
@@ -61,48 +58,14 @@ class RegisterController extends Controller
         return redirect('/masuk');
     }
 
-    /**
-     * Display the specified resouerce.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function validateLoginForm(Request $request){
+        $validated = $request->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+        return redirect()->route('login');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -44,8 +44,8 @@ Route::get('/masuk', function () {
     return view('halaman-login');
 });
 
-Route::get('/register', [RegisterController::class, 'display']);
-Route::post('/register', [RegisterController::class, 'saveUserData']);
+Route::get('/register', [AuthController::class, 'display']);
+Route::post('/register', [AuthController::class, 'saveUserData']);
 
 Route::get('/lupapassword', function () {
     return view('halaman-lupa-password');
