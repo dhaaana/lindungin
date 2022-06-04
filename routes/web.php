@@ -14,5 +14,32 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('halaman-utama');
 });
+
+Route::get('/contoh', function () {
+    return view('contoh');
+});
+
+Route::get('/your-forum', function (){
+    return view('your-forum');
+});
+
+Route::get('/nama-forum', function () {
+    return view('halaman-forum');
+
+});
+
+Route::get('/create', function () {
+    return view('create');
+});
+
+Route::get('/update', function () {
+    return view('update');
+});
+
+
+Route::get('/login', function () {
+    return view('halaman-login');
+});
+
