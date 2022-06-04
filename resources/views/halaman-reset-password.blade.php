@@ -7,22 +7,23 @@
             <div class="col-lg-5">
                 <div class="container p-sm-5 h-100">
                     <div class="row d-flex align-items-center justify-content-center h-100 p-sm-4">
-                        <form method="POST" action="{{ route('password.email') }}" class="needs-validation">
+                        <form method="POST" action="{{ route('password.update') }}" class="needs-validation" novalidate>
                             @csrf
+                            <input type="hidden" name="token" value="{{ $request->route('token') }}">
                             <h4 class="fw-bold">Forgot Your Password?</h4>
-                            <p class="text-muted py-2">Enter your email here and we will send you a reset password access to your email</p>
+                            <p class="text-muted py-2">Enter your new password here! </p>
                             <!-- Username input -->
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput" name="email" value="{{ old('email') }}">
-                                <label for="floatingInput">Email</label>
-                                @error('email')
+                                <input type="password" required class="form-control" id="floatingInput">
+                                <label for="floatingInput">New Password</label>
+                                @error('password')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="d-flex justify-content-center">
                                 <!-- Submit button -->
-                                <button type="submit" class="btn-blue w-100">Send Reset Password Confirmation</button>
+                                <button type="submit" class="btn-blue w-100">Reset Password</button>
                             </div>
                         </form>
 

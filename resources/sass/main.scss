@@ -198,7 +198,14 @@ button {
     }
 }
 
+.post-icons-disabled {
+    padding: 6px;
+    background-color: $primary-color-light;
+    color: $primary-color;
+    border-radius: 6px;
+    cursor: default;
+}
+
 .verified-icons {
     @include icons($primary-color, 2rem);
 }
-

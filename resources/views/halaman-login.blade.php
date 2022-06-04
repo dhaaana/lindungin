@@ -36,7 +36,7 @@
                             </div>
                             <br>
                             <div class="d-flex justify-content-center align-items-center mb-4">
-                                Forgot password?<a class="link-unstyled underline-link text-primary fw-bold ms-1" href="#">
+                                Forgot password?<a class="link-unstyled underline-link text-primary fw-bold ms-1" href="/forgot-password">
                                     Press
                                     Here</a>
                             </div>

@@ -8,11 +8,12 @@
             <div class="row mt-3">
                 <div class="col-lg-9">
                     <!--Bootstrap classes arrange web page components into columns and rows in a grid -->
-                    <form action="" method="POST" class="card p-4">
+                    <form action="/create" method="POST" class="card p-4">
+                        @csrf
                         <div class="form-group">
                             <label for="category" class="mb-2">Category <span class="require"></span></label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Select Category Here</option>
+                            <select id="category" name="category" class="form-select" aria-label="Default select example">
+                                <option selected disabled hidden>Select Category Here</option>
                                 <option value="1">Kuliner</option>
                                 <option value="2">Kesehatan</option>
                                 <option value="3">Politik</option>
@@ -24,14 +25,14 @@
                         <br>
                         <div class="form-group">
                             <label for="title" class="mb-2">Title <span class="require"></span></label>
-                            <input type="text" class="form-control" placeholder="Title" name="title" />
+                            <input type="text" id='title' class="form-control" placeholder="Title" name="title" />
                             <br>
                             <label class="mb-2" for="description">Content</label>
-                            <textarea rows="5" class="contents form-control" name="description"></textarea>
+                            <textarea id="body" name="body" rows="5" class="contents form-control" name="description"></textarea>
                         </div>
                         <br>
                         <div class="d-flex justify-content-end gap-2">
-                            <button type="button" class="btn-gray">
+                            <button type="submit" class="btn-gray" formaction="/create/draft">
                                 Save as Draft
                             </button>
                             <button type="submit" class="btn-blue">

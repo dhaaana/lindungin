@@ -14,10 +14,10 @@ class CreateStatusesTable extends Migration
     public function up()
     {
         Schema::create('statuses', function (Blueprint $table) {
-            $table->id('idStatus');
-            $table->string('idUser');
-            $table->string('idForum');
-            $table->string('idComment')->nullable();;
+            $table->id('id');
+            $table->foreignId('user_id');
+            $table->foreignId('forum_id');
+            $table->foreignId('comment_id')->nullable();;
             $table->string('type');
             $table->timestamps();
         });

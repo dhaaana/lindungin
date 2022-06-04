@@ -5,35 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
-class RegisterController extends Controller
+class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // By Jess
+    // UC01.01 dan 01.02
     public function display()
     {
         return view('halaman-register');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function saveUserData(Request $request)
     {
         $validated = $request->validate([
@@ -45,20 +27,22 @@ class RegisterController extends Controller
         ]);
 
         $user = new User();
-        $user->fill([
-            $user->username = $validated['username'],
-            $user->name = $validated['name'],
-            $user->email = $validated['email'],
-            $user->password = Hash::make($validated['password']),
-        ]
+        $user->fill(
+            [
+                $user->username = $validated['username'],
+                $user->name = $validated['name'],
+                $user->email = $validated['email'],
+                $user->password = Hash::make($validated['password']),
+            ]
 
         );
         $user->save();
 
-        return redirect('/masuk');
+        return redirect('/login');
     }
 
-    public function validateLoginForm(Request $request){
+    public function validateLoginForm(Request $request)
+    {
         $validated = $request->validate([
             'email' => 'required',
             'password' => 'required'
@@ -66,6 +50,23 @@ class RegisterController extends Controller
         return redirect()->route('login');
     }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
 
+        request()->session()->invalidate();
 
+        request()->session()->regenerateToken();
+
+        return redirect('/login');
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+        if ($user->hasRole('verifikator')) {
+            return redirect()->route('verifikator.page');
+        }
+
+        return redirect('/');
+    }
 }

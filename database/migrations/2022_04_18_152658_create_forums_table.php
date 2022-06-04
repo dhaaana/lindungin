@@ -14,10 +14,14 @@ class CreateForumsTable extends Migration
     public function up()
     {
         Schema::create('forums', function (Blueprint $table) {
-            $table->id('idForum');
-            $table->string('idUser');
+            $table->id('id');
+            $table->foreignId('user_id');
             $table->string('title');
+            $table->string('category');
             $table->text('body');
+            $table->boolean('isPublished');
+            $table->string('verification_status')->nullable()->default('Not Verified');
+            $table->string('slug');
             $table->integer('like');
             $table->integer('dislike');
             $table->integer('report');
