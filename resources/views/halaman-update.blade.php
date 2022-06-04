@@ -15,11 +15,11 @@
                             <label for="category" class="mb-2">Category <span class="require"></span></label>
                             <select id="category" name="category" class="form-select" aria-label="Default select example">
                                 <option selected disabled hidden>Select Category Here</option>
-                                <option value="1" @if ($forum->category == 1) selected @endif>Kuliner</option>
-                                <option value="2" @if ($forum->category == 2) selected @endif>Kesehatan</option>
-                                <option value="3" @if ($forum->category == 3) selected @endif>Politik</option>
-                                <option value="3" @if ($forum->category == 4) selected @endif>Pendidikan</option>
-                                <option value="3" @if ($forum->category == 5) selected @endif>Sosial</option>
+                                <option value="Kuliner" @if ($forum->category == Kuliner) selected @endif>Kuliner</option>
+                                <option value="Kesehatan" @if ($forum->category == Kesehatan) selected @endif>Kesehatan</option>
+                                <option value="Politik" @if ($forum->category == Politik) selected @endif>Politik</option>
+                                <option value="Pendidikan" @if ($forum->category == Pendidikan) selected @endif>Pendidikan</option>
+                                <option value="Sosial" @if ($forum->category == Sosial) selected @endif>Sosial</option>
                             </select>
                         </div>
                         <br>

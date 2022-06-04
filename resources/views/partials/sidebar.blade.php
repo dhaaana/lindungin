@@ -128,10 +128,12 @@
             </button>
             <div class="collapse" id="dashboard-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="link-dark rounded">Kesehatan</a></li>
-                    <li><a href="#" class="link-dark rounded">Politik</a></li>
-                    <li><a href="#" class="link-dark rounded">Sosial</a></li>
-                    <li><a href="#" class="link-dark rounded">See More..</a></li>
+                    <li><a href="/categories/Kesehatan" class="link-dark rounded">Kesehatan</a></li>
+                    <li><a href="/categories/Politik" class="link-dark rounded">Politik</a></li>
+                    <li><a href="/categories/Sosial" class="link-dark rounded">Sosial</a></li>
+                    <li><a href="/categories/Pendidikan" class="link-dark rounded">Pendidikan</a></li>
+                    <li><a href="/categories/Kuliner" class="link-dark rounded">Kuliner</a></li>
+
                 </ul>
             </div>
         </li>

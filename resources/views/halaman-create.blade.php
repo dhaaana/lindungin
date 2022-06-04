@@ -14,11 +14,11 @@
                             <label for="category" class="mb-2">Category <span class="require"></span></label>
                             <select id="category" name="category" class="form-select" aria-label="Default select example">
                                 <option selected disabled hidden>Select Category Here</option>
-                                <option value="1">Kuliner</option>
-                                <option value="2">Kesehatan</option>
-                                <option value="3">Politik</option>
-                                <option value="3">Pendidikan</option>
-                                <option value="3">Sosial</option>
+                                <option value="Kuliner">Kuliner</option>
+                                <option value="Kesehatan">Kesehatan</option>
+                                <option value="Politik">Politik</option>
+                                <option value="Pendidikan">Pendidikan</option>
+                                <option value="Sosial">Sosial</option>
                             </select>
 
                         </div>

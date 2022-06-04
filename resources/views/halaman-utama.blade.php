@@ -7,12 +7,69 @@
         <div class="container">
             <div class="row mt-3">
                 <div class="col-lg-9">
+                    @if (isset($filter))
                     <div class="d-flex mb-3 gap-2 align-items-center">
-                        <button class="btn-gray text-xs p-1 px-2 rounded-pill">New</button>
-                        <button class="btn-gray text-xs p-1 px-2 rounded-pill">Top</button>
-                        <button class="btn-orange text-xs p-1 px-2 rounded-pill">Hot</button>
-                        <button class="btn-gray text-xs p-1 px-2 rounded-pill">Closed</button>
+                        <a href="/filter/new" class="link-unstyled">
+                            <button
+                                class="@if ($filter == 'new') btn-orange
+                                @else
+                                btn-gray @endif text-xs p-1 px-2 rounded-pill">New</button>
+                        </a>
+                        <a href="/filter/hot" class="link-unstyled">
+                            <button
+                                class="@if ($filter == 'hot') btn-orange
+                            @else
+                            btn-gray @endif text-xs p-1 px-2 rounded-pill">Hot</button>
+                        </a>
+                        <a href="/filter/verified" class="link-unstyled">
+                            <button
+                                class="@if ($filter == 'verified') btn-orange
+                        @else
+                        btn-gray @endif text-xs p-1 px-2 rounded-pill">Verified</button>
+                        </a>
+                        <a href="/filter/hoax" class="link-unstyled">
+                            <button
+                                class="@if ($filter == 'hoax') btn-orange
+                        @else
+                        btn-gray @endif text-xs p-1 px-2 rounded-pill">Hoax</button>
+                        </a>
+                        <a href="/filter/misinformation" class="link-unstyled">
+                            <button
+                                class="@if ($filter == 'misinformation') btn-orange
+                        @else
+                        btn-gray @endif text-xs p-1 px-2 rounded-pill">Misinformation</button>
+                        </a>
+                        <a href="/filter/facts" class="link-unstyled">
+                            <button
+                                class="@if ($filter == 'facts') btn-orange
+                        @else
+                        btn-gray @endif text-xs p-1 px-2 rounded-pill">Facts</button>
+                        </a>
+
                     </div>
+                    @else
+                    <div class="d-flex mb-3 gap-2 align-items-center">
+                        <a href="/filter/new" class="link-unstyled">
+                            <button class="btn-gray text-xs p-1 px-2 rounded-pill">New</button>
+                        </a>
+                        <a href="/filter/hot" class="link-unstyled">
+                            <button class="btn-gray text-xs p-1 px-2 rounded-pill">Hot</button>
+                        </a>
+                        <a href="/filter/verified" class="link-unstyled">
+                            <button class="btn-gray text-xs p-1 px-2 rounded-pill">Verified</button>
+                        </a>
+                        <a href="/filter/hoax" class="link-unstyled">
+                            <button class="btn-gray text-xs p-1 px-2 rounded-pill">Hoax</button>
+                        </a>
+                        <a href="/filter/misinformation" class="link-unstyled">
+                            <button class="btn-gray text-xs p-1 px-2 rounded-pill">Misinformation</button>
+                        </a>
+                        <a href="/filter/facts" class="link-unstyled">
+                            <button class="btn-gray text-xs p-1 px-2 rounded-pill">Facts</button>
+                        </a>
+                    </div>
+                    @endif
+
                     @foreach ($allforum as $forum)
                         <div class="card p-4 mb-3">
                             <div class="d-flex justify-content-between align-items-center">
@@ -49,8 +106,18 @@
                                         <h5 class="fw-bold">{{ $forum->title }}</h5>
                                     </a>
                                     <div>
-                                        <span class="badge bg-light rounded-pill text-dark"><span
-                                                class="badge bg-danger rounded-pill me-1">X</span>Hoax</span>
+                                        @if ($forum->verification_status == 'Hoax')
+                                            <span class="badge bg-light rounded-pill text-dark"><span
+                                                    class="badge bg-danger rounded-pill me-1">X</span>Hoax</span>
+                                        @elseif($forum->verification_status == 'Facts')
+                                            <span class="badge bg-light rounded-pill text-dark"><span
+                                                    class="badge bg-success rounded-pill me-1">V</span>Facts</span>
+                                        @elseif($forum->verification_status == 'Misinformation')
+                                            <span class="badge bg-light rounded-pill text-dark"><span
+                                                    class="badge bg-warning rounded-pill me-1">X</span>Misinformation</span>
+                                        @elseif($forum->verification_status == 'Not Verified')
+                                            <span class="badge bg-light rounded-pill text-dark">Not Verified</span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="mw-100">
@@ -63,20 +130,47 @@
                                         class="fa fa-clock-o me-1"></i>{{ \Carbon\Carbon::parse($forum->created_at)->format('j F Y') }}
                                 </div>
                                 <div class="d-flex align-items-center gap-3">
+                                    @if (!$allstatus->where('forum_id', $forum->id)->where('type', 'like')->isEmpty())
+                                        {{-- tombol like kalau sudah pernah like --}}
+                                        <form action={{ 'forum/unlike/' . $forum->id }} method="post"
+                                            class="d-flex align-items-center gap-sm-2">
+                                            @csrf
+                                            <button type="submit" class="fa fa-thumbs-o-up post-icons-disabled"></button>
+                                            <p class="m-0 text-muted">{{ $forum->like }}</p>
+                                        </form>
+                                    @else
+                                        {{-- tombol like kalau belum pernah like --}}
+                                        <form action={{ 'forum/like/' . $forum->id }} method="post"
+                                            class="d-flex align-items-center gap-sm-2">
+                                            @csrf
+                                            <button type="submit" class="fa fa-thumbs-o-up post-icons"></button>
+                                            <p class="m-0 text-muted">{{ $forum->like }}</p>
+                                        </form>
+                                    @endif
 
-                                    <div class="d-flex align-items-center gap-1">
-                                        <button class="fa fa-thumbs-o-up post-icons-disabled"></button>
-                                        <p class="m-0 text-muted">{{ $forum->like }}</p>
-                                    </div>
-
-                                    <div class="d-flex align-items-center gap-2">
-                                        <button class="fa fa-thumbs-o-down post-icons"></button>
-                                        <p class="m-0 text-muted">{{ $forum->dislike }}</p>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-2">
+                                    {{-- tombol dislike --}}
+                                    @if (!$allstatus->where('forum_id', $forum->id)->where('type', 'dislike')->isEmpty())
+                                        {{-- tombol dislike kalau sudah pernah dislike --}}
+                                        <form action={{ 'forum/undislike/' . $forum->id }} method="post"
+                                            class="d-flex align-items-center gap-sm-2">
+                                            @csrf
+                                            <button type="submit" class="fa fa-thumbs-o-down post-icons-disabled"></button>
+                                            <p class="m-0 text-muted">{{ $forum->dislike }}</p>
+                                        </form>
+                                    @else
+                                        {{-- tombol dislike kalau belum pernah dislike --}}
+                                        <form action={{ 'forum/dislike/' . $forum->id }} method="post"
+                                            class="d-flex align-items-center gap-sm-2">
+                                            @csrf
+                                            <button type="submit" class="fa fa-thumbs-o-down post-icons"></button>
+                                            <p class="m-0 text-muted">{{ $forum->dislike }}</p>
+                                        </form>
+                                    @endif
+                                    <a href={{ '/forum/' . $forum->slug . '#comment' }}
+                                        class="d-flex align-items-center gap-2 link-unstyled">
                                         <button class="fa fa-comment-o post-icons"></button>
                                         <p class="m-0 text-muted">{{ $forum->comments->count() }}</p>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>

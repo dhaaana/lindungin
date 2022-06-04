@@ -20,6 +20,7 @@ class CreateForumsTable extends Migration
             $table->string('category');
             $table->text('body');
             $table->boolean('isPublished');
+            $table->string('verification_status')->nullable()->default('Not Verified');
             $table->string('slug');
             $table->integer('like');
             $table->integer('dislike');

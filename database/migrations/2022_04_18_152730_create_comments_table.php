@@ -18,6 +18,7 @@ class CreateCommentsTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('forum_id');
             $table->text('body');
+            $table->boolean('isPinned')->default(false);
             $table->integer('like');
             $table->integer('dislike');
             $table->integer('report');
