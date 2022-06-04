@@ -91,15 +91,17 @@
             Search
         </li>
         <li class="mb-3 px-2">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search here.." aria-label="Search here.."
-                    aria-describedby="button-addon2">
-                <div class="btn-blue" id="button-addon2"><svg xmlns="http://www.w3.org/2000/svg"
-                        class="plus-icons mx-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg></div>
-            </div>
+            <form action="/search/forum" method="get">
+                <div class="input-group">
+                    <input name="title" type="text" class="form-control" placeholder="Search here.." aria-label="Search here.."
+                        aria-describedby="button-addon2">
+                    <button type="submit" class="btn-blue" id="button-addon2"><svg xmlns="http://www.w3.org/2000/svg"
+                            class="plus-icons mx-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg></button>
+                </div>
+            </form>
         </li>
         <li class="text-xs text-secondary mb-2 ms-3 fw-bold">
             Menu

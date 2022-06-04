@@ -7,8 +7,6 @@ use Illuminate\Support\Str;
 use App\Models\Forum;
 use App\Models\Status;
 
-
-
 class ForumController extends Controller
 {
     // By Aldi
@@ -20,6 +18,13 @@ class ForumController extends Controller
         return view('halaman-utama', compact('allforum', 'allstatus'));
     }
 
+    public function searchForum(Request $request) {
+        $idUser = 1; //sementara
+        $allforum = Forum::where('title', 'like', "%".$request->title."%")->get();
+        $allstatus = Status::where('user_id', $idUser)->get();
+        return view('halaman-utama', compact('allforum', 'allstatus'));
+    }
+
     public function displayYourForum() {
         $idUser = 1; //sementara
         $yourforum = Forum::where('user_id', $idUser)->get()->sortByDesc('created_at');
@@ -27,14 +32,12 @@ class ForumController extends Controller
     }
 
     public function displayForumPage($slug) {
-        $idUser = 1;
         $selectedforum = Forum::where('slug', $slug)->first();
         $comments = Forum::find($selectedforum->id)->comments;
-        $allstatus = Status::where('user_id', $idUser)->get();
+
         return view('halaman-forum', [
             'forum' => $selectedforum,
-            'comments' => $comments,
-            'allstatus' => $allstatus
+            'comments' => $comments
         ]);
     }
 

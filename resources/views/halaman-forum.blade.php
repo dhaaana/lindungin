@@ -6,9 +6,6 @@
     <div class='p-sm-3 w-100'>
         <div class="container">
             <div class="row mt-3">
-                @foreach ($allstatus as $status)
-                    <h1>{{ $status->type }}</h1>
-                @endforeach
                 <div class="col-lg-9">
                     <div class="card border border-2 border-danger p-4 mb-3">
                         <div class="d-flex gap-3 flex-lg-row flex-column justify-content-between align-items-center">
@@ -48,48 +45,18 @@
                         </div>
                         <div class="mt-1 d-flex justify-content-between align-items-sm-center border-0">
                             <div class="d-flex align-items-center gap-sm-3">
-                                @if ($status->forum_id == $forum->id && $status->type == 'like')
-                                    {{-- tombol like kalau sudah pernah like --}}
-                                    <form action={{ 'unlike/' . $forum->id . '/' . $status->id }} method="post"
-                                        class="d-flex align-items-center gap-sm-2">
-                                        @csrf
-                                        <button type="submit" class="fa fa-thumbs-o-up post-icons"></button>
-                                        <p class="m-0 text-muted">{{ $forum->like }}</p>
-                                    </form>
-                                @else
-                                    {{-- tombol like kalau belum pernah like --}}
-                                    <form action={{ 'like/' . $forum->id }} method="post"
-                                        class="d-flex align-items-center gap-sm-2">
-                                        @csrf
-                                        <button type="submit" class="fa fa-thumbs-o-up post-icons"></button>
-                                        <p class="m-0 text-muted">{{ $forum->like }}</p>
-                                    </form>
-                                @endif
-
-                                {{-- tombol dislike --}}
-                                @if ($status->forum_id == $forum->id && $status->type == 'dislike')
-                                    {{-- tombol dislike kalau sudah pernah dislike --}}
-                                    <form action={{ 'undislike/' . $forum->id . '/' . $status->id }} method="post"
-                                        class="d-flex align-items-center gap-sm-2">
-                                        @csrf
-                                        <button type="submit" class="fa fa-thumbs-o-down post-icons"></button>
-                                        <p class="m-0 text-muted">{{ $forum->dislike }}</p>
-                                    </form>
-                                @else
-                                    {{-- tombol dislike kalau belum pernah dislike --}}
-                                    <form action={{ 'dislike/' . $forum->id }} method="post"
-                                        class="d-flex align-items-center gap-sm-2">
-                                        @csrf
-                                        <button type="submit" class="fa fa-thumbs-o-down post-icons"></button>
-                                        <p class="m-0 text-muted">{{ $forum->dislike }}</p>
-                                    </form>
-                                @endif
-
-                                {{-- tombol comment --}}
-                                <form class="d-flex align-items-center gap-sm-2">
+                                <div class="d-flex align-items-center gap-sm-2">
+                                    <button class="fa fa-thumbs-o-up post-icons"></button>
+                                    <p class="m-0 text-muted">{{ $forum->like }}</p>
+                                </div>
+                                <div class="d-flex align-items-center gap-sm-2">
+                                    <button class="fa fa-thumbs-o-down post-icons"></button>
+                                    <p class="m-0 text-muted">{{ $forum->dislike }}</p>
+                                </div>
+                                <div class="d-flex align-items-center gap-sm-2">
                                     <button class="fa fa-comment-o post-icons"></button>
                                     <p class="m-0 text-muted">12</p>
-                                </form>
+                                </div>
                             </div>
                             <div class="dropdown">
                                 <button class="btn" type="button" id="dropdownMenuButton1"
@@ -233,18 +200,18 @@
                             </div>
                             <div class="mt-1 d-flex justify-content-between align-items-sm-center border-0">
                                 <div class="d-flex align-items-center gap-sm-3">
-                                    <form action={{ 'like/' . $forum->id . '/' . $comment->id }} method="post"
-                                        class="d-flex align-items-center gap-sm-2">
-                                        @csrf
-                                        <button type="submit" class="fa fa-thumbs-o-up post-icons"></button>
-                                        <p class="m-0 text-muted">{{ $comment->like }}</p>
-                                    </form>
-                                    <form action={{ 'dislike/' . $forum->id . '/' . $comment->id }} method="post"
-                                        class="d-flex align-items-center gap-sm-2">
-                                        @csrf
-                                        <button type="submit" class="fa fa-thumbs-o-down post-icons"></button>
-                                        <p class="m-0 text-muted">{{ $comment->dislike }} </p>
-                                    </form>
+                                    <div class="d-flex align-items-center gap-sm-2">
+                                        <button class="fa fa-thumbs-o-up post-icons"></button>
+                                        <p class="m-0 text-muted">546</p>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-sm-2">
+                                        <button class="fa fa-thumbs-o-down post-icons"></button>
+                                        <p class="m-0 text-muted">457</p>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-sm-2">
+                                        <button class="fa fa-comment-o post-icons"></button>
+                                        <p class="m-0 text-muted">12</p>
+                                    </div>
                                 </div>
                                 <div class="dropdown">
                                     <button class="btn" type="button" id="dropdownMenuButton1"

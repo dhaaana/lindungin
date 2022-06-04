@@ -8,6 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class Status extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'forum_id', 'comment_id', 'type'];
-
 }
