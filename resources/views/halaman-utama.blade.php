@@ -49,8 +49,18 @@
                                         <h5 class="fw-bold">{{ $forum->title }}</h5>
                                     </a>
                                     <div>
-                                        <span class="badge bg-light rounded-pill text-dark"><span
-                                                class="badge bg-danger rounded-pill me-1">X</span>Hoax</span>
+                                        @if ($forum->verification_status == 'Hoax')
+                                            <span class="badge bg-light rounded-pill text-dark"><span
+                                                    class="badge bg-danger rounded-pill me-1">X</span>Hoax</span>
+                                        @elseif($forum->verification_status == 'Facts')
+                                            <span class="badge bg-light rounded-pill text-dark"><span
+                                                    class="badge bg-success rounded-pill me-1">V</span>Facts</span>
+                                        @elseif($forum->verification_status == 'Misinformation')
+                                            <span class="badge bg-light rounded-pill text-dark"><span
+                                                    class="badge bg-warning rounded-pill me-1">X</span>Misinformation</span>
+                                        @elseif($forum->verification_status == 'Not Verified')
+                                            <span class="badge bg-light rounded-pill text-dark">Not Verified</span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="mw-100">
@@ -63,20 +73,47 @@
                                         class="fa fa-clock-o me-1"></i>{{ \Carbon\Carbon::parse($forum->created_at)->format('j F Y') }}
                                 </div>
                                 <div class="d-flex align-items-center gap-3">
+                                    @if (!$allstatus->where('forum_id', $forum->id)->where('type', 'like')->isEmpty())
+                                        {{-- tombol like kalau sudah pernah like --}}
+                                        <form action={{ 'forum/unlike/' . $forum->id }} method="post"
+                                            class="d-flex align-items-center gap-sm-2">
+                                            @csrf
+                                            <button type="submit" class="fa fa-thumbs-o-up post-icons-disabled"></button>
+                                            <p class="m-0 text-muted">{{ $forum->like }}</p>
+                                        </form>
+                                    @else
+                                        {{-- tombol like kalau belum pernah like --}}
+                                        <form action={{ 'forum/like/' . $forum->id }} method="post"
+                                            class="d-flex align-items-center gap-sm-2">
+                                            @csrf
+                                            <button type="submit" class="fa fa-thumbs-o-up post-icons"></button>
+                                            <p class="m-0 text-muted">{{ $forum->like }}</p>
+                                        </form>
+                                    @endif
 
-                                    <div class="d-flex align-items-center gap-1">
-                                        <button class="fa fa-thumbs-o-up post-icons-disabled"></button>
-                                        <p class="m-0 text-muted">{{ $forum->like }}</p>
-                                    </div>
-
-                                    <div class="d-flex align-items-center gap-2">
-                                        <button class="fa fa-thumbs-o-down post-icons"></button>
-                                        <p class="m-0 text-muted">{{ $forum->dislike }}</p>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-2">
+                                    {{-- tombol dislike --}}
+                                    @if (!$allstatus->where('forum_id', $forum->id)->where('type', 'dislike')->isEmpty())
+                                        {{-- tombol dislike kalau sudah pernah dislike --}}
+                                        <form action={{ 'forum/undislike/' . $forum->id }} method="post"
+                                            class="d-flex align-items-center gap-sm-2">
+                                            @csrf
+                                            <button type="submit" class="fa fa-thumbs-o-down post-icons-disabled"></button>
+                                            <p class="m-0 text-muted">{{ $forum->dislike }}</p>
+                                        </form>
+                                    @else
+                                        {{-- tombol dislike kalau belum pernah dislike --}}
+                                        <form action={{ 'forum/dislike/' . $forum->id }} method="post"
+                                            class="d-flex align-items-center gap-sm-2">
+                                            @csrf
+                                            <button type="submit" class="fa fa-thumbs-o-down post-icons"></button>
+                                            <p class="m-0 text-muted">{{ $forum->dislike }}</p>
+                                        </form>
+                                    @endif
+                                    <a href={{ '/forum/' . $forum->slug . '#comment' }}
+                                        class="d-flex align-items-center gap-2 link-unstyled">
                                         <button class="fa fa-comment-o post-icons"></button>
                                         <p class="m-0 text-muted">{{ $forum->comments->count() }}</p>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
