@@ -1,5 +1,5 @@
 @extends('layout.navigation')
-@section('title', 'Contoh')
+@section('title', 'Dashboard Tim Verifikator')
 
 @section('content')
     @include('partials.sidebar')
@@ -7,6 +7,24 @@
         <div class="container">
             <div class="row mt-3">
                 <div class="col-lg-9 ">
+                    @if ($message = Session::get('deletesuccess'))
+                        <div class="px-1">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ $message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        </div>
+                    @endif
+                    @if ($message = Session::get('passsuccess'))
+                        <div class="">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ $message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        </div>
+                    @endif
                     <div class="card p-4 m-0">
                         <h4 class="fw-bold text-center mb-4">Forum Verification</h4>
                         <table class="table">
@@ -16,7 +34,7 @@
                                 <th>Action</th>
                             </tr>
                             @foreach ($allforum as $forum)
-                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                <div class="modal fade" id={{ 'exampleModal' . $forum->id }} tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -58,7 +76,7 @@
                                             Forum</a>
 
                                         <button class="btn btn-success btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal">Verify</button>
+                                            data-bs-target={{ '#exampleModal' . $forum->id }}>Verify</button>
 
                                     </td>
                                 </tr>
@@ -74,7 +92,30 @@
                                 <th>Report Count</th>
                                 <th>Action</th>
                             </tr>
-                            @foreach ($allforum as $forum)
+                            @foreach ($reportedforum as $forum)
+                                <div class="modal fade" id={{ 'deleteModal' . $forum->id }} tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Delete Forum</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <form action={{ '/report/delete/forum/' . $forum->id }} method='get'>
+                                                @csrf
+                                                <div class="modal-body">
+                                                    <p>Are you sure you want to delete "{{ $forum->title }}"</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn-gray"
+                                                        data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                                 <tr>
                                     <td>{{ $forum->title }}</td>
                                     <td>{{ $forum->report }}</td>
@@ -82,9 +123,10 @@
                                         <a class="btn btn-primary btn-sm" href={{ '/forum/' . $forum->slug }}>View
                                             Forum</a>
 
-                                        <a class="btn btn-success btn-sm" href="#">Pass</a>
-                                        <a class="btn btn-danger btn-sm" href="#">Delete</a>
-
+                                        <a class="btn btn-success btn-sm"
+                                            href={{ '/report/pass/forum/' . $forum->id }}>Pass</a>
+                                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                            data-bs-target={{ '#deleteModal' . $forum->id }}>Delete</button>
                                     </td>
                                 </tr>
                             @endforeach

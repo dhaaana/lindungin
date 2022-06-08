@@ -4,6 +4,7 @@ use App\Http\Controllers\ForumController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,48 +20,32 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ForumController::class, 'displayAllForum']);
 Route::get('/forum/{slug}', [ForumController::class, 'displayForumPage']);
-Route::get('/search', [ForumController::class, 'searchForum']);
+Route::get('/search/forum', [ForumController::class, 'searchForum']);
 Route::get('/categories/{category}', [ForumController::class, 'categoryForum']);
 Route::get('/filter/{filter}', [ForumController::class, 'filterForum']);
-Route::get('/your-forum', [ForumController::class, 'displayYourForum']);
-Route::get('/create', [ForumController::class, 'displayCreatePage']);
-Route::post('/create', [ForumController::class, 'saveAndAdd']);
-Route::post('/create/draft', [ForumController::class, 'saveDraft']);
-Route::get('/update/forum/{id}', [ForumController::class, 'displayUpdatePage']);
-Route::post('/update/forum/{id}', [ForumController::class, 'saveNew']);
-Route::post('/update/forum/{id}/draft', [ForumController::class, 'saveNewDraft']);
-Route::get('/delete/forum/{id}', [ForumController::class, 'deleteForum']);
-Route::post('forum/like/{id}/{comment_id?}', [StatusController::class, 'addLike']);
-Route::post('forum/unlike/{id}/{comment_id?}', [StatusController::class, 'removeLike']);
-Route::post('forum/dislike/{id}/{comment_id?}', [StatusController::class, 'addDislike']);
-Route::post('forum/undislike/{id}/{comment_id?}', [StatusController::class, 'removeDislike']);
-Route::post('/forum/{slug}/comment', [CommentController::class, 'saveComment']);
-Route::get('/dashboard', [DashboardController::class, 'displayDashboard']);
-Route::post('/verify/forum/{id}', [StatusController::class, 'verifyForum']);
+Route::get('/your-forum', [ForumController::class, 'displayYourForum'])->middleware('auth');
+Route::get('/create', [ForumController::class, 'displayCreatePage'])->middleware('auth');
+Route::post('/create', [ForumController::class, 'saveAndAdd'])->middleware('auth');
+Route::post('/create/draft', [ForumController::class, 'saveDraft'])->middleware('auth');
+Route::get('/update/forum/{id}', [ForumController::class, 'displayUpdatePage'])->middleware('auth');
+Route::post('/update/forum/{id}', [ForumController::class, 'saveNew'])->middleware('auth');
+Route::post('/update/forum/{id}/draft', [ForumController::class, 'saveNewDraft'])->middleware('auth');
+Route::get('/delete/forum/{id}', [ForumController::class, 'deleteForum'])->middleware('auth');
+Route::post('/like/forum/{id}/{comment_id?}', [StatusController::class, 'addLike'])->middleware('auth');
+Route::post('/unlike/forum/{id}/{comment_id?}', [StatusController::class, 'removeLike'])->middleware('auth');
+Route::post('/dislike/forum/{id}/{comment_id?}', [StatusController::class, 'addDislike'])->middleware('auth');
+Route::post('/undislike/forum/{id}/{comment_id?}', [StatusController::class, 'removeDislike'])->middleware('auth');
+Route::post('/forum/{slug}/comment', [CommentController::class, 'saveComment'])->middleware('auth');
+Route::get('/dashboard', [DashboardController::class, 'displayDashboard'])->middleware('auth')->middleware('verifikator');
+Route::post('/verify/forum/{id}', [DashboardController::class, 'verifyForum'])->middleware('auth')->middleware('verifikator');
+Route::get('/report/delete/forum/{id}', [DashboardController::class, 'deleteReportedForum'])->middleware('auth')->middleware('verifikator');
+Route::get('/report/pass/forum/{id}', [DashboardController::class, 'resetForumReports'])->middleware('auth')->middleware('verifikator');
+Route::post('/report/forum/{id}', [DashboardController::class, 'reportForum']);
+Route::get('/pin/comment/{id}', [CommentController::class, 'pinComment'])->middleware('auth')->middleware('verifikator');
+Route::get('/unpin/comment/{id}', [CommentController::class, 'unpinComment'])->middleware('auth')->middleware('verifikator');
 
 
 
-// Route::get('/contoh', function () {
-//     return view('contoh');
-// });
-
-// Route::get('/nama-forum', function () {
-//     return view('halaman-forum');
-// });
-// Route::get('/your-forum', function (){
-//     return view('your-forum');
-// });
-
-// Route::post('/like/{id}', [ForumController::class, 'addLike']);
-
-// Route::post('/dislike/{id}', [ForumController::class, 'addDislike']);
-
-// Route::get('/create', [ForumController::class, 'displayCreatePage']);
-// Route::post('/create', [ForumController::class, 'saveAndAdd']);
-// Route::get('/update/{id}', [ForumController::class, 'displayUpdatePage']);
-
-
-
-// Route::get('/login', function () {
-//     return view('halaman-login');
-// });
+Route::get('/register', [AuthController::class, 'display']);
+Route::post('/register', [AuthController::class, 'saveUserData']);
+Route::post('/logout', [AuthController::class, 'logout']);

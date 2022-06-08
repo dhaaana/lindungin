@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    // By Jess
+    // UC01.01 dan 01.02
     public function display()
     {
         return view('halaman-register');
@@ -56,15 +58,15 @@ class AuthController extends Controller
 
         request()->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect()->back();
     }
 
-    public function authenticated(Request $request, $user)
-    {
-        if ($user->hasRole('verifikator')) {
-            return redirect()->route('verifikator.page');
-        }
+    // public function authenticated(Request $request, $user)
+    // {
+    //     if ($user->hasRole('verifikator')) {
+    //         return redirect()->route('verifikator.page');
+    //     }
 
-        return redirect('/');
-    }
+    //     return redirect('/');
+    // }
 }

@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Report extends Model
 {
     use HasFactory;
+    protected $fillable = ['user_id', 'comment_id', 'forum_id', 'report'];
+
+    public function forum()
+    {
+        return $this->belongsTo(Forum::class);
+    }
 }

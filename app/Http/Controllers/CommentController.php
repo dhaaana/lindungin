@@ -9,13 +9,14 @@ class CommentController extends Controller
 {
     // By Wahyu
     // UC02.02 Post Komentar pada Forum
-    public function saveComment(Request $request) {
+    public function saveComment(Request $request)
+    {
 
         $request->validate([
             'body' => 'required'
         ]);
         Comment::create([
-            'user_id' => 1,
+            'user_id' => auth()->user()->id,
             'forum_id' => $request->idForum,
             'body' => $request->body,
             'isVerified' => true,
@@ -25,7 +26,22 @@ class CommentController extends Controller
         ]);
 
         //$forumSlug = Forum::latest()->first()->slug;
-        return redirect('/');
+        return redirect()->back()->with(['commentsuccess' => 'Comment Posted']);
     }
 
+    public function pinComment($id)
+    {
+        $comment = Comment::find($id);
+        $comment->isPinned = true;
+        $comment->save();
+        return redirect()->back();
+    }
+
+    public function unpinComment($id)
+    {
+        $comment = Comment::find($id);
+        $comment->isPinned = false;
+        $comment->save();
+        return redirect()->back();
+    }
 }

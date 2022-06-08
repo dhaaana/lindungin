@@ -9,9 +9,9 @@ use App\Models\Comment;
 
 class StatusController extends Controller
 {
-    public function addLike($id, $comment_id = null, $user_id = 1)
+    public function addLike($id, $comment_id = null)
     {
-        $idUser = 1;
+        $idUser = auth()->user()->id;
 
         $forum = Forum::find($id);
         if ($comment_id == null) {
@@ -22,7 +22,7 @@ class StatusController extends Controller
             $forum->like = $initialLike + 1;
             $forum->save();
             $status = Status::create([
-                'user_id' => $user_id,
+                'user_id' => $idUser,
                 'forum_id' => $forum->id,
                 'comment_id' => $comment_id,
                 'type' => "like",
@@ -37,7 +37,7 @@ class StatusController extends Controller
             $comment->like = $initialLike + 1;
             $comment->save();
             $status = Status::create([
-                'user_id' => $user_id,
+                'user_id' => $idUser,
                 'forum_id' => $forum->id,
                 'comment_id' => $comment_id,
                 'type' => "like",
@@ -48,7 +48,7 @@ class StatusController extends Controller
 
     public function removeLike($id, $comment_id = null)
     {
-        $idUser = 1;
+        $idUser = auth()->user()->id;
         $forum = Forum::find($id);
         if ($comment_id == null) {
             $initialLike = $forum->like;
@@ -66,9 +66,9 @@ class StatusController extends Controller
         }
     }
 
-    public function addDislike($id, $comment_id = null, $user_id = 1)
+    public function addDislike($id, $comment_id = null)
     {
-        $idUser = 1;
+        $idUser = auth()->user()->id;
 
         $forum = Forum::find($id);
         if ($comment_id == null) {
@@ -79,7 +79,7 @@ class StatusController extends Controller
             $forum->dislike = $initialDislike + 1;
             $forum->save();
             $status = Status::create([
-                'user_id' => $user_id,
+                'user_id' => $idUser,
                 'forum_id' => $forum->id,
                 'comment_id' => $comment_id,
                 'type' => "dislike",
@@ -94,7 +94,7 @@ class StatusController extends Controller
             $comment->dislike = $initialDislike + 1;
             $comment->save();
             $status = Status::create([
-                'user_id' => $user_id,
+                'user_id' => $idUser,
                 'forum_id' => $forum->id,
                 'comment_id' => $comment_id,
                 'type' => "dislike",
@@ -105,7 +105,7 @@ class StatusController extends Controller
 
     public function removeDislike($id, $comment_id = null)
     {
-        $idUser = 1;
+        $idUser = auth()->user()->id;
         $forum = Forum::find($id);
         if ($comment_id == null) {
             $initialDisike = $forum->dislike;
@@ -121,13 +121,5 @@ class StatusController extends Controller
             $status = Status::where('user_id', $idUser)->where('forum_id', $id)->where('comment_id', $comment_id)->where('type', 'dislike')->delete();
             return redirect()->back();
         }
-    }
-
-    public function verifyForum(Request $request, $id)
-    {
-        $forum = Forum::find($id);
-        $forum->verification_status = $request->verification_status;
-        $forum->save();
-        return redirect()->back();
     }
 }

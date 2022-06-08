@@ -7,6 +7,18 @@
         <div class="container">
             <div class="row mt-3">
                 <div class="col-lg-9">
+                    @if ($message = Session::get('commentsuccess'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ $message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ $message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     <div
                         class="card border border-2 @if ($forum->verification_status == 'Hoax') border-danger
                     @elseif($forum->verification_status == 'Facts')
@@ -20,12 +32,13 @@
                                 </div>
                                 <div>
                                     <div class="d-flex flex-wrap gap-sm-2 gap-1">
-                                        <a href="#" class="h5 m-0 link-unstyled text-dark">Maulana
-                                            Ahmadi</a>
-                                        <a href="#" class="h7 text-muted link-unstyled">@aldimaulana</a>
+                                        <a href="#" class="h5 m-0 link-unstyled text-dark">{{ $forum->user->name }}</a>
+                                        <a href="#"
+                                            class="h7 text-muted link-unstyled">{{ '@' . $forum->user->username }}</a>
                                     </div>
                                     <div class="d-flex mt-1">
-                                        <div class="text-muted text-xs m-0">Last Updated 15 Februari 2022
+                                        <div class="text-muted text-xs m-0">Last Updated
+                                            {{ \Carbon\Carbon::parse($forum->created_at)->format('j F Y') }}
                                         </div>
                                     </div>
                                 </div>
@@ -57,50 +70,70 @@
                             </div>
                         </div>
                         <div class="mt-1 d-flex justify-content-between align-items-sm-center border-0">
-                            <div class="d-flex align-items-center gap-sm-3">
-                                @if ($isliked == true)
-                                    {{-- tombol like kalau sudah pernah like --}}
-                                    <form action={{ 'unlike/' . $forum->id }} method="post"
-                                        class="d-flex align-items-center gap-sm-2">
-                                        @csrf
-                                        <button type="submit" class="fa fa-thumbs-o-up post-icons-disabled"></button>
-                                        <p class="m-0 text-muted">{{ $forum->like }}</p>
-                                    </form>
-                                @else
-                                    {{-- tombol like kalau belum pernah like --}}
-                                    <form action={{ 'like/' . $forum->id }} method="post"
-                                        class="d-flex align-items-center gap-sm-2">
-                                        @csrf
+                            @isset($isliked)
+                                <div class="d-flex align-items-center gap-sm-3">
+                                    @if ($isliked == true)
+                                        {{-- tombol like kalau sudah pernah like --}}
+                                        <form action={{ '/unlike/forum/' . $forum->id }} method="post"
+                                            class="d-flex align-items-center gap-sm-2">
+                                            @csrf
+                                            <button type="submit" class="fa fa-thumbs-o-up post-icons-disabled"></button>
+                                            <p class="m-0 text-muted">{{ $forum->like }}</p>
+                                        </form>
+                                    @else
+                                        {{-- tombol like kalau belum pernah like --}}
+                                        <form action={{ '/like/forum/' . $forum->id }} method="post"
+                                            class="d-flex align-items-center gap-sm-2">
+                                            @csrf
+                                            <button type="submit" class="fa fa-thumbs-o-up post-icons"></button>
+                                            <p class="m-0 text-muted">{{ $forum->like }}</p>
+                                        </form>
+                                    @endif
+
+                                    {{-- tombol dislike --}}
+                                    @if ($isdisliked == true)
+                                        {{-- tombol dislike kalau sudah pernah dislike --}}
+                                        <form action={{ '/undislike/forum/' . $forum->id }} method="post"
+                                            class="d-flex align-items-center gap-sm-2">
+                                            @csrf
+                                            <button type="submit" class="fa fa-thumbs-o-down post-icons-disabled"></button>
+                                            <p class="m-0 text-muted">{{ $forum->dislike }}</p>
+                                        </form>
+                                    @else
+                                        {{-- tombol dislike kalau belum pernah dislike --}}
+                                        <form action={{ '/dislike/forum/' . $forum->id }} method="post"
+                                            class="d-flex align-items-center gap-sm-2">
+                                            @csrf
+                                            <button type="submit" class="fa fa-thumbs-o-down post-icons"></button>
+                                            <p class="m-0 text-muted">{{ $forum->dislike }}</p>
+                                        </form>
+                                    @endif
+
+                                    {{-- tombol comment --}}
+                                    <a href="#comment" class="d-flex align-items-center gap-sm-2 link-unstyled">
+                                        <button class="fa fa-comment-o post-icons"></button>
+                                        <p class="m-0 text-muted">{{ $forum->comments->count() }}</p>
+                                    </a>
+                                </div>
+                            @else
+                                <div class="d-flex align-items-center gap-sm-3">
+                                    <a href="/login" class="d-flex align-items-center gap-sm-2 link-unstyled">
                                         <button type="submit" class="fa fa-thumbs-o-up post-icons"></button>
                                         <p class="m-0 text-muted">{{ $forum->like }}</p>
-                                    </form>
-                                @endif
 
-                                {{-- tombol dislike --}}
-                                @if ($isdisliked == true)
-                                    {{-- tombol dislike kalau sudah pernah dislike --}}
-                                    <form action={{ 'undislike/' . $forum->id }} method="post"
-                                        class="d-flex align-items-center gap-sm-2">
-                                        @csrf
-                                        <button type="submit" class="fa fa-thumbs-o-down post-icons-disabled"></button>
-                                        <p class="m-0 text-muted">{{ $forum->dislike }}</p>
-                                    </form>
-                                @else
-                                    {{-- tombol dislike kalau belum pernah dislike --}}
-                                    <form action={{ 'dislike/' . $forum->id }} method="post"
-                                        class="d-flex align-items-center gap-sm-2">
-                                        @csrf
+                                    </a>
+                                    <a href="/login" class="d-flex align-items-center gap-sm-2 link-unstyled">
                                         <button type="submit" class="fa fa-thumbs-o-down post-icons"></button>
                                         <p class="m-0 text-muted">{{ $forum->dislike }}</p>
-                                    </form>
-                                @endif
 
-                                {{-- tombol comment --}}
-                                <a href="#comment" class="d-flex align-items-center gap-sm-2 link-unstyled">
-                                    <button class="fa fa-comment-o post-icons"></button>
-                                    <p class="m-0 text-muted">{{ $forum->comments->count() }}</p>
-                                </a>
-                            </div>
+                                    </a>
+                                    <a href="#comment" class="d-flex align-items-center gap-sm-2 link-unstyled">
+                                        <button class="fa fa-comment-o post-icons"></button>
+                                        <p class="m-0 text-muted">{{ $forum->comments->count() }}</p>
+                                    </a>
+                                </div>
+                            @endisset
+
                             <div class="dropdown">
                                 <button class="btn" type="button" id="dropdownMenuButton1"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -111,35 +144,50 @@
                                     </svg>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="#">Share</a></li>
-                                    <li><button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal">
-                                            Report
-                                        </button></li>
-                                    <li><a class="dropdown-item" href="#">Visit Profile</a></li>
+                                    <li><button class="dropdown-item"
+                                            onclick="navigator.clipboard.writeText(window.location.href)">Share</button>
+                                    </li>
+                                    @isset(auth()->user()->id)
+                                        <li>
+
+                                            <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">
+                                                Report
+                                            </button>
+                                        </li>
+                                    @endisset
                                 </ul>
                             </div>
                         </div>
                     </div>
 
-                    <h5 class="fw-bold text-center my-4 text-secondary">Comments</h5>
                     {{-- Comments Input --}}
-                    <div class="card p-4 mb-3" id="comment">
-                        <form action={{ '/forum/' . $forum->id . '/comment' }} method="post">
-                            @csrf
-                            <input type="text" name="idForum" value="{{ $forum->id }}" hidden>
-                            <textarea class="comments" name="body" id="body" cols="30" rows="10"></textarea>
-                            <div class="mt-4 d-flex justify-content-end">
-                                <button type="submit" class="btn-blue"><i
-                                        class="fa fa-comment-o px-2"></i>Comment</button>
-                            </div>
-                        </form>
-                    </div>
+                    @isset(auth()->user()->id)
+                        <h5 class="fw-bold text-center my-4 text-secondary">Comments</h5>
+                        <div class="card p-4 mb-3" id="comment">
+                            <form action={{ '/forum/' . $forum->id . '/comment' }} method="post">
+                                @csrf
+                                <input type="text" name="idForum" value="{{ $forum->id }}" hidden>
+                                <textarea class="comments" name="body" id="body" cols="30" rows="10"></textarea>
+                                <div class="mt-4 d-flex justify-content-end">
+                                    <button type="submit" class="btn-blue"><i
+                                            class="fa fa-comment-o px-2"></i>Comment</button>
+                                </div>
+                            </form>
+                        </div>
+                    @else
+                        <div class="text-center py-5">
+                            <h3 class="text-muted mb-4">You must be logged in to comment</h3>
+                            <a href="/login" class="link-unstyled btn-blue">Login</a>
+                        </div>
+                    @endisset
 
                     {{-- Pinned Comments --}}
-                    <h5 class="my-4 text-secondary">Pinned Comments {{ '(' . $pinnedcomments->count() . ')' }}</h5>
-                    @foreach ($pinnedcomments as $comments)
-                        <div class="card mb-3">
+                    @if ($pinnedcomments->isNotEmpty())
+                        <h5 class="my-4 text-secondary">Pinned Comments {{ '(' . $pinnedcomments->count() . ')' }}</h5>
+                    @endif
+                    @foreach ($pinnedcomments as $comment)
+                        <div class="card mb-3" id={{ 'comment' . $comment->id }}>
                             <div class="border-blue rounded">
                                 <div class="d-flex gap-2 align-items-center justify-content-end bg-light-blue p-3">
                                     <h5 class="fw-bold m-0">Comment verified by expert</h5>
@@ -160,13 +208,13 @@
                                             <div>
                                                 <div class="d-flex flex-wrap gap-sm-2 gap-1">
                                                     <a href="#"
-                                                        class="h5 m-0 link-unstyled text-dark border-sm-end">Jesselyne</a>
+                                                        class="h5 m-0 link-unstyled text-dark border-sm-end">{{ $comment->user->name }}</a>
                                                     <a href="#"
-                                                        class="h7 text-muted link-unstyled border-sm-start">@jess</a>
+                                                        class="h7 text-muted link-unstyled border-sm-start">{{ '@' . $comment->user->username }}</a>
                                                 </div>
                                                 <div class="d-flex mt-1">
                                                     <div class="text-muted text-xs m-0">Last Updated
-                                                        {{ \Carbon\Carbon::parse($comments->created_at)->format('j F Y') }}
+                                                        {{ \Carbon\Carbon::parse($comment->created_at)->format('j F Y') }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -174,48 +222,66 @@
                                     </div>
                                     <div class="mt-3">
                                         <div>
-                                            {{ $comments->body }}
+                                            {!! $comment->body !!}
                                         </div>
                                     </div>
                                     <div class="mt-1 d-flex justify-content-between align-items-sm-center border-0">
-                                        @if (!$commentlike->where('comment_id', $comment->id)->isEmpty())
-                                            {{-- tombol like kalau sudah pernah like --}}
-                                            <form action={{ 'unlike/' . $forum->id . '/' . $comment->id }} method="post"
-                                                class="d-flex align-items-center gap-sm-2">
-                                                @csrf
-                                                <button type="submit"
-                                                    class="fa fa-thumbs-o-up post-icons-disabled"></button>
-                                                <p class="m-0 text-muted">{{ $comment->like }}</p>
-                                            </form>
-                                        @else
-                                            {{-- tombol like kalau belum pernah like --}}
-                                            <form action={{ 'like/' . $forum->id . '/' . $comment->id }} method="post"
-                                                class="d-flex align-items-center gap-sm-2">
-                                                @csrf
-                                                <button type="submit" class="fa fa-thumbs-o-up post-icons"></button>
-                                                <p class="m-0 text-muted">{{ $comment->like }}</p>
-                                            </form>
-                                        @endif
+                                        @isset($commentlike)
+                                            <div class="d-flex align-items-center gap-sm-3">
+                                                @if (!$commentlike->where('comment_id', $comment->id)->isEmpty())
+                                                    {{-- tombol like kalau sudah pernah like --}}
+                                                    <form action={{ '/unlike/forum/' . $forum->id . '/' . $comment->id }}
+                                                        method="post" class="d-flex align-items-center gap-sm-2">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="fa fa-thumbs-o-up post-icons-disabled"></button>
+                                                        <p class="m-0 text-muted">{{ $comment->like }}</p>
+                                                    </form>
+                                                @else
+                                                    {{-- tombol like kalau belum pernah like --}}
+                                                    <form action={{ '/like/forum/' . $forum->id . '/' . $comment->id }}
+                                                        method="post" class="d-flex align-items-center gap-sm-2">
+                                                        @csrf
+                                                        <button type="submit" class="fa fa-thumbs-o-up post-icons"></button>
+                                                        <p class="m-0 text-muted">{{ $comment->like }}</p>
+                                                    </form>
+                                                @endif
 
-                                        {{-- tombol dislike --}}
-                                        @if (!$commentdislike->where('comment_id', $comment->id)->isEmpty())
-                                            {{-- tombol dislike kalau sudah pernah dislike --}}
-                                            <form action={{ 'undislike/' . $forum->id . '/' . $comment->id }}
-                                                method="post" class="d-flex align-items-center gap-sm-2">
-                                                @csrf
-                                                <button type="submit"
-                                                    class="fa fa-thumbs-o-down post-icons-disabled"></button>
-                                                <p class="m-0 text-muted">{{ $comment->dislike }}</p>
-                                            </form>
+                                                {{-- tombol dislike --}}
+                                                @if (!$commentdislike->where('comment_id', $comment->id)->isEmpty())
+                                                    {{-- tombol dislike kalau sudah pernah dislike --}}
+                                                    <form action={{ '/undislike/forum/' . $forum->id . '/' . $comment->id }}
+                                                        method="post" class="d-flex align-items-center gap-sm-2">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="fa fa-thumbs-o-down post-icons-disabled"></button>
+                                                        <p class="m-0 text-muted">{{ $comment->dislike }}</p>
+                                                    </form>
+                                                @else
+                                                    {{-- tombol dislike kalau belum pernah dislike --}}
+                                                    <form action={{ '/dislike/forum/' . $forum->id . '/' . $comment->id }}
+                                                        method="post" class="d-flex align-items-center gap-sm-2">
+                                                        @csrf
+                                                        <button type="submit" class="fa fa-thumbs-o-down post-icons"></button>
+                                                        <p class="m-0 text-muted">{{ $comment->dislike }}</p>
+                                                    </form>
+                                                @endif
+                                            </div>
                                         @else
-                                            {{-- tombol dislike kalau belum pernah dislike --}}
-                                            <form action={{ 'dislike/' . $forum->id . '/' . $comment->id }} method="post"
-                                                class="d-flex align-items-center gap-sm-2">
-                                                @csrf
-                                                <button type="submit" class="fa fa-thumbs-o-down post-icons"></button>
-                                                <p class="m-0 text-muted">{{ $comment->dislike }}</p>
-                                            </form>
-                                        @endif
+                                            <div class="d-flex align-items-center gap-sm-3">
+                                                <a href="/login" class="d-flex align-items-center gap-sm-2 link-unstyled">
+                                                    <button type="submit" class="fa fa-thumbs-o-up post-icons"></button>
+                                                    <p class="m-0 text-muted">{{ $comment->like }}</p>
+
+                                                </a>
+                                                <a href="/login" class="d-flex align-items-center gap-sm-2 link-unstyled">
+                                                    <button type="submit" class="fa fa-thumbs-o-down post-icons"></button>
+                                                    <p class="m-0 text-muted">{{ $comment->dislike }}</p>
+
+                                                </a>
+                                            </div>
+                                        @endisset
+
                                         <div class="dropdown">
                                             <button class="btn" type="button" id="dropdownMenuButton1"
                                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -226,12 +292,11 @@
                                                 </svg>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item" href="#">Share</a></li>
-                                                <li><button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal">
-                                                        Report
-                                                    </button></li>
-                                                <li><a class="dropdown-item" href="#">Visit Profile</a></li>
+                                                <li><a class="dropdown-item"
+                                                        href={{ '/unpin/comment/' . $comment->id }}>Unpin</a></li>
+                                                <li><button class="dropdown-item"
+                                                        onclick="navigator.clipboard.writeText(`${window.location.href}#{{ 'comment' . $comment->id }}`)">Share</button>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -241,9 +306,14 @@
                     @endforeach
 
                     {{-- All Comments --}}
-                    <h5 class="my-4 text-secondary">All Comments {{ '(' . $forum->comments->count() . ')' }}</h5>
-                    @foreach ($forum->comments as $comment)
-                        <div class="card p-4 mb-3">
+                    @if ($comments->isNotEmpty())
+                        <h5 class="my-4 text-secondary">All Comments {{ '(' . $comments->count() . ')' }}</h5>
+                    @endif
+                    @if ($forum->comments->isEmpty())
+                        <h5 class="my-4 text-secondary text-center">There is no comment yet</h5>
+                    @endif
+                    @foreach ($comments as $comment)
+                        <div class="card p-4 mb-3" id={{ 'comment' . $comment->id }}>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex flex-shrink align-items-center gap-3">
                                     <div>
@@ -251,11 +321,14 @@
                                     </div>
                                     <div>
                                         <div class="d-flex flex-wrap gap-sm-2 gap-1">
-                                            <a href="#" class="h5 m-0 link-unstyled text-dark border-sm-end">Devi</a>
-                                            <a href="#" class="h7 text-muted link-unstyled border-sm-start">@devi</a>
+                                            <a href="#"
+                                                class="h5 m-0 link-unstyled text-dark border-sm-end">{{ $comment->user->name }}</a>
+                                            <a href="#"
+                                                class="h7 text-muted link-unstyled border-sm-start">{{ '@' . $comment->user->name }}</a>
                                         </div>
                                         <div class="d-flex mt-1">
-                                            <div class="text-muted text-xs m-0">Last Updated 15 Februari 2022
+                                            <div class="text-muted text-xs m-0">Last Updated
+                                                {{ \Carbon\Carbon::parse($comment->created_at)->format('j F Y') }}
                                             </div>
                                         </div>
                                     </div>
@@ -267,44 +340,60 @@
                                 </div>
                             </div>
                             <div class="mt-1 d-flex justify-content-between align-items-sm-center border-0">
-                                <div class="d-flex align-items-center gap-sm-3">
-                                    @if (!$commentlike->where('comment_id', $comment->id)->isEmpty())
-                                        {{-- tombol like kalau sudah pernah like --}}
-                                        <form action={{ 'unlike/' . $forum->id . '/' . $comment->id }} method="post"
-                                            class="d-flex align-items-center gap-sm-2">
-                                            @csrf
-                                            <button type="submit" class="fa fa-thumbs-o-up post-icons-disabled"></button>
-                                            <p class="m-0 text-muted">{{ $comment->like }}</p>
-                                        </form>
-                                    @else
-                                        {{-- tombol like kalau belum pernah like --}}
-                                        <form action={{ 'like/' . $forum->id . '/' . $comment->id }} method="post"
-                                            class="d-flex align-items-center gap-sm-2">
-                                            @csrf
+                                @isset($commentlike)
+                                    <div class="d-flex align-items-center gap-sm-3">
+                                        @if (!$commentlike->where('comment_id', $comment->id)->isEmpty())
+                                            {{-- tombol like kalau sudah pernah like --}}
+                                            <form action={{ '/unlike/forum/' . $forum->id . '/' . $comment->id }}
+                                                method="post" class="d-flex align-items-center gap-sm-2">
+                                                @csrf
+                                                <button type="submit" class="fa fa-thumbs-o-up post-icons-disabled"></button>
+                                                <p class="m-0 text-muted">{{ $comment->like }}</p>
+                                            </form>
+                                        @else
+                                            {{-- tombol like kalau belum pernah like --}}
+                                            <form action={{ '/like/forum/' . $forum->id . '/' . $comment->id }} method="post"
+                                                class="d-flex align-items-center gap-sm-2">
+                                                @csrf
+                                                <button type="submit" class="fa fa-thumbs-o-up post-icons"></button>
+                                                <p class="m-0 text-muted">{{ $comment->like }}</p>
+                                            </form>
+                                        @endif
+
+                                        {{-- tombol dislike --}}
+                                        @if (!$commentdislike->where('comment_id', $comment->id)->isEmpty())
+                                            {{-- tombol dislike kalau sudah pernah dislike --}}
+                                            <form action={{ '/undislike/forum/' . $forum->id . '/' . $comment->id }}
+                                                method="post" class="d-flex align-items-center gap-sm-2">
+                                                @csrf
+                                                <button type="submit" class="fa fa-thumbs-o-down post-icons-disabled"></button>
+                                                <p class="m-0 text-muted">{{ $comment->dislike }}</p>
+                                            </form>
+                                        @else
+                                            {{-- tombol dislike kalau belum pernah dislike --}}
+                                            <form action={{ '/dislike/forum/' . $forum->id . '/' . $comment->id }}
+                                                method="post" class="d-flex align-items-center gap-sm-2">
+                                                @csrf
+                                                <button type="submit" class="fa fa-thumbs-o-down post-icons"></button>
+                                                <p class="m-0 text-muted">{{ $comment->dislike }}</p>
+                                            </form>
+                                        @endif
+                                    </div>
+                                @else
+                                    <div class="d-flex align-items-center gap-sm-3">
+                                        <a href="/login" class="d-flex align-items-center gap-sm-2 link-unstyled">
                                             <button type="submit" class="fa fa-thumbs-o-up post-icons"></button>
                                             <p class="m-0 text-muted">{{ $comment->like }}</p>
-                                        </form>
-                                    @endif
 
-                                    {{-- tombol dislike --}}
-                                    @if (!$commentdislike->where('comment_id', $comment->id)->isEmpty())
-                                        {{-- tombol dislike kalau sudah pernah dislike --}}
-                                        <form action={{ 'undislike/' . $forum->id . '/' . $comment->id }} method="post"
-                                            class="d-flex align-items-center gap-sm-2">
-                                            @csrf
-                                            <button type="submit" class="fa fa-thumbs-o-down post-icons-disabled"></button>
-                                            <p class="m-0 text-muted">{{ $comment->dislike }}</p>
-                                        </form>
-                                    @else
-                                        {{-- tombol dislike kalau belum pernah dislike --}}
-                                        <form action={{ 'dislike/' . $forum->id . '/' . $comment->id }} method="post"
-                                            class="d-flex align-items-center gap-sm-2">
-                                            @csrf
+                                        </a>
+                                        <a href="/login" class="d-flex align-items-center gap-sm-2 link-unstyled">
                                             <button type="submit" class="fa fa-thumbs-o-down post-icons"></button>
                                             <p class="m-0 text-muted">{{ $comment->dislike }}</p>
-                                        </form>
-                                    @endif
-                                </div>
+
+                                        </a>
+                                    </div>
+                                @endisset
+
                                 <div class="dropdown">
                                     <button class="btn" type="button" id="dropdownMenuButton1"
                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -315,13 +404,11 @@
                                         </svg>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="#">Pin</a></li>
-                                        <li><a class="dropdown-item" href="#">Share</a></li>
-                                        <li><button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                Report
-                                            </button></li>
-                                        <li><a class="dropdown-item" href="#">Visit Profile</a></li>
+                                        <li><a class="dropdown-item" href={{ '/pin/comment/' . $comment->id }}>Pin</a>
+                                        </li>
+                                        <li><button class="dropdown-item"
+                                                onclick="navigator.clipboard.writeText(`${window.location.href}#{{ 'comment' . $comment->id }}`)">Share</button>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -338,49 +425,60 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            It's suspicious or spam
-                                        </label>
+                                <form action={{ '/report/forum/' . $forum->id }} method="post">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="reports[]" type="checkbox"
+                                                value="It's suspicious or spam" id="spam">
+                                            <label class="form-check-label" for="spam">
+                                                It's suspicious or spam
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="reports[]" type="checkbox"
+                                                value="It's abusive or harmful" id="abusive">
+                                            <label class="form-check-label" for="abusive">
+                                                It's abusive or harmful
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="reports[]" type="checkbox"
+                                                value="Doesn't answer the question that was asked" id="notasnwer">
+                                            <label class="form-check-label" for="notasnwer">
+                                                Doesn't answer the question that was asked
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="reports[]" type="checkbox"
+                                                value="It's plagiarism" id="plagiarism">
+                                            <label class="form-check-label" for="plagiarism">
+                                                It's plagiarism
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="reports[]" type="checkbox"
+                                                value="Substantially incorrect and/or incorrect primary information"
+                                                id="incorrect">
+                                            <label class="form-check-label" for="incorrect">
+                                                Substantially incorrect and/or incorrect primary information
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="reports[]" type="checkbox"
+                                                value="Sexually explicit, pornographic or otherwise inappropriate"
+                                                id="explicit">
+                                            <label class="form-check-label" for="explicit">
+                                                Sexually explicit, pornographic or otherwise inappropriate
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"
-                                            checked>
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            It's abusive or harmful
-                                        </label>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-gray"
+                                            data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-danger">Report</button>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            Doesn't answer the question that was asked
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            It's plagiarism
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            Substantially incorrect and/or incorrect primary information
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            Sexually explicit, pornographic or otherwise inappropriate
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-danger">Report</button>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

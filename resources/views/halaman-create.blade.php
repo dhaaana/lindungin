@@ -20,15 +20,23 @@
                                 <option value="Pendidikan">Pendidikan</option>
                                 <option value="Sosial">Sosial</option>
                             </select>
-
+                            @error('category')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <br>
                         <div class="form-group">
                             <label for="title" class="mb-2">Title <span class="require"></span></label>
                             <input type="text" id='title' class="form-control" placeholder="Title" name="title" />
+                            @error('title')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                             <br>
-                            <label class="mb-2" for="description">Content</label>
+                            <label class="mb-2" for="body">Content</label>
                             <textarea id="body" name="body" rows="5" class="contents form-control" name="description"></textarea>
+                            @error('body')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <br>
                         <div class="d-flex justify-content-end gap-2">

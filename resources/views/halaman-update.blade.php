@@ -15,22 +15,32 @@
                             <label for="category" class="mb-2">Category <span class="require"></span></label>
                             <select id="category" name="category" class="form-select" aria-label="Default select example">
                                 <option selected disabled hidden>Select Category Here</option>
-                                <option value="Kuliner" @if ($forum->category == Kuliner) selected @endif>Kuliner</option>
-                                <option value="Kesehatan" @if ($forum->category == Kesehatan) selected @endif>Kesehatan</option>
-                                <option value="Politik" @if ($forum->category == Politik) selected @endif>Politik</option>
-                                <option value="Pendidikan" @if ($forum->category == Pendidikan) selected @endif>Pendidikan</option>
-                                <option value="Sosial" @if ($forum->category == Sosial) selected @endif>Sosial</option>
+                                <option value="Kuliner" @if ($forum->category == 'Kuliner') selected @endif>Kuliner</option>
+                                <option value="Kesehatan" @if ($forum->category == 'Kesehatan') selected @endif>Kesehatan
+                                </option>
+                                <option value="Politik" @if ($forum->category == 'Politik') selected @endif>Politik</option>
+                                <option value="Pendidikan" @if ($forum->category == 'Pendidikan') selected @endif>Pendidikan
+                                </option>
+                                <option value="Sosial" @if ($forum->category == 'Sosial') selected @endif>Sosial</option>
                             </select>
+                            @error('category')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <br>
                         <div class="form-group">
                             <label for="title" class="mb-2">Title <span class="require"></span></label>
                             <input type="text" id='title' class="form-control" placeholder="Title" name="title"
                                 value="{{ $forum->title }}" />
+                            @error('title')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                             <br>
-                            <label class="mb-2" for="description">Content</label>
-                            <textarea value="{{ $forum->body }}" id="body" name="body" rows="5" class="contents form-control"
-                                name="description"></textarea>
+                            <label class="mb-2" for="body">Content</label>
+                            <textarea value="{{ $forum->body }}" id="body" name="body" rows="5" class="contents form-control" name="description"></textarea>
+                            @error('body')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <br>
                         <div class="d-flex justify-content-end gap-2">

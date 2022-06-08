@@ -15,10 +15,10 @@ class CreateReportsTable extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id('id');
-            $table->foreignId('comment_id');
+            $table->foreignId('comment_id')->nullable();
             $table->foreignId('user_id');
             $table->foreignId('forum_id');
-            $table->string('report');
+            $table->string('report')->nullable();
             $table->timestamps();
         });
     }

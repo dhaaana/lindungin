@@ -15,4 +15,13 @@ class Forum extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 };

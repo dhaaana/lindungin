@@ -93,10 +93,11 @@
         <li class="mb-3 px-2">
             <form action="/search/forum" method="get">
                 <div class="input-group">
-                    <input name="title" type="text" class="form-control" placeholder="Search here.." aria-label="Search here.."
-                        aria-describedby="button-addon2">
-                    <button type="submit" class="btn-blue" id="button-addon2"><svg xmlns="http://www.w3.org/2000/svg"
-                            class="plus-icons mx-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <input name="title" type="text" class="form-control" placeholder="Search here.."
+                        aria-label="Search here.." aria-describedby="button-addon2">
+                    <button type="submit" class="btn-blue" id="button-addon2"><svg
+                            xmlns="http://www.w3.org/2000/svg" class="plus-icons mx-0" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg></button>
@@ -152,28 +153,23 @@
                 </button>
             </a>
         </li>
-        <li class="mb-1">
-            <a class="link-unstyled" href="/your-forum">
-                <button class="btn btn-toggle d-flex align-items-center text-start rounded collapsed">
-                    <span><svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icons" fill="none" viewBox="0 0 24 24"
+        @isset(auth()->user()->roles)
+            <li class="border-top my-3"></li>
+            <li class="text-xs text-secondary mb-2 ms-3 fw-bold">
+                Dashboard Navigator
+            </li>
+            <li class="mb-1">
+                <a class="link-unstyled" href="/dashboard">
+                    <button class="btn btn-toggle d-flex align-items-center text-start rounded collapsed">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icons" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                        </svg></span> Your Comments
-                </button>
-            </a>
-        </li>
-        <li class="mb-1">
-            <a class="link-unstyled" href="/your-forum">
-                <button class="btn btn-toggle d-flex align-items-center text-start rounded collapsed">
-                    <span><svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icons" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg></span> Your Likes
-                </button>
-            </a>
-        </li>
+                                d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg> Dashboard
+                    </button>
+                </a>
+            </li>
+        @endisset
         <button class="position-absolute mb-3 mr-3 btn btn-light" data-bs-toggle="tooltip" onclick="toggleNav()"
             data-bs-placement="right" title="Close" style="bottom:0; right: 1.3rem;">
             <span><svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icons" fill="none" viewBox="0 0 24 24"

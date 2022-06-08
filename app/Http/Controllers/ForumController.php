@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Forum;
 use App\Models\Status;
+use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
 
 class ForumController extends Controller
 {
@@ -13,87 +15,144 @@ class ForumController extends Controller
     // UC02.01 (Read), Share Forum
     public function displayAllForum()
     {
-        $idUser = 1; //sementara
+        $mustreadforum = Forum::all()->where('isPublished', true)->sortBy('like')->take(3);
         $allforum = Forum::all()->where('isPublished', true)->sortByDesc('created_at');
-        $allstatus = Status::where('user_id', $idUser)->get();
-        return view('halaman-utama', compact('allforum', 'allstatus'));
+        if (Auth::check()) {
+            $idUser = auth()->user()->id;
+            $allstatus = Status::where('user_id', $idUser)->get();
+            return view('halaman-utama', [
+                'allforum' => $allforum,
+                'allstatus' => $allstatus,
+                'mustreadforum' => $mustreadforum,
+            ]);
+        }
+        return view('halaman-utama', compact('allforum', 'mustreadforum'));
     }
 
-    public function searchForum(Request $request) {
-        $idUser = 1; //sementara
-        $allforum = Forum::where('title', 'like', "%".$request->title."%")->where('isPublished', true)->get();
-        $allstatus = Status::where('user_id', $idUser)->get();
-        return view('halaman-utama', compact('allforum', 'allstatus'));
+    public function searchForum(Request $request)
+    {
+        $mustreadforum = Forum::all()->where('isPublished', true)->sortBy('like')->take(3);
+        $allforum = Forum::where('title', 'like', "%" . $request->title . "%")->where('isPublished', true)->get();
+        if (Auth::check()) {
+            $idUser = auth()->user()->id;
+            $allstatus = Status::where('user_id', $idUser)->get();
+            return view('halaman-utama', [
+                'allforum' => $allforum,
+                'allstatus' => $allstatus,
+                'mustreadforum' => $mustreadforum,
+            ]);
+        }
+        return view('halaman-utama', compact('allforum', 'mustreadforum'));
     }
 
-    public function categoryForum($category) {
-        $idUser = 1; //sementara
-        $allforum = Forum::where('category',$category)->where('isPublished', true)->get();
-        $allstatus = Status::where('user_id', $idUser)->get();
-        return view('halaman-utama', compact('allforum', 'allstatus'));
+    public function categoryForum($category)
+    {
+        $mustreadforum = Forum::all()->where('isPublished', true)->sortBy('like')->take(3);
+        $allforum = Forum::where('category', $category)->where('isPublished', true)->get();
+        if (Auth::check()) {
+            $idUser = auth()->user()->id;
+            $allstatus = Status::where('user_id', $idUser)->get();
+            return view('halaman-utama', [
+                'allforum' => $allforum,
+                'allstatus' => $allstatus,
+                'mustreadforum' => $mustreadforum,
+            ]);
+        }
+        return view('halaman-utama', compact('allforum', 'mustreadforum'));
     }
 
-    public function filterForum($filter) {
-        $idUser = 1; //sementara
-        if ($filter=="new"){
+    public function filterForum($filter)
+    {
+        $mustreadforum = Forum::all()->where('isPublished', true)->sortBy('like')->take(3);
+
+        if ($filter == "new") {
             $allforum = Forum::all()->where('isPublished', true)->sortByDesc('created_at');
         }
-        if ($filter=="hot"){
+        if ($filter == "hot") {
             $allforum = Forum::all()->where('isPublished', true)->sortBy('like');
         }
-        if ($filter=="verified"){
+        if ($filter == "verified") {
             $allforum = Forum::all()->where('isPublished', true)->where('verification_status', '<>', "Not Verified");
         }
-        if ($filter=="hoax"){
+        if ($filter == "hoax") {
             $allforum = Forum::all()->where('isPublished', true)->where('verification_status', "Hoax");
         }
-        if ($filter=="misinformation"){
+        if ($filter == "misinformation") {
             $allforum = Forum::all()->where('isPublished', true)->where('verification_status', "Misinformation");
         }
-        if ($filter=="facts"){
+        if ($filter == "facts") {
             $allforum = Forum::all()->where('isPublished', true)->where('verification_status', "Not Facts");
         }
 
-        $allstatus = Status::where('user_id', $idUser)->get();
+        if (Auth::check()) {
+            $idUser = auth()->user()->id;
+            $allstatus = Status::where('user_id', $idUser)->get();
+            return view('halaman-utama', [
+                'allforum' => $allforum,
+                'allstatus' => $allstatus,
+                'filter' => $filter,
+                'mustreadforum' => $mustreadforum
+            ]);
+        }
+
         return view('halaman-utama', [
             'allforum' => $allforum,
-            'allstatus' => $allstatus,
             'filter' => $filter,
+            'mustreadforum' => $mustreadforum
         ]);
     }
-    public function displayYourForum() {
-        $idUser = 1; //sementara
+    public function displayYourForum()
+    {
+        $idUser = auth()->user()->id;
         $yourforum = Forum::where('user_id', $idUser)->get()->sortByDesc('created_at');
-        return view('halaman-your-forum', compact('yourforum'));
+        $yourcommentcount = Comment::where('user_id', $idUser)->get()->count();
+        $yourlikecount = Status::where('user_id', $idUser)->where('type', 'like')->get()->count();
+        return view('halaman-your-forum', compact('yourforum', 'yourcommentcount', 'yourlikecount'));
     }
 
     public function displayForumPage($slug)
     {
-        $idUser = 1;
-        $selectedforum = Forum::where('slug', $slug)->first();
-        $comments = Forum::find($selectedforum->id)->comments->where('isPinned', false);
-        $pinnedcomments = Forum::find($selectedforum->id)->comments->where('isPinned', true);
-        $isliked = Status::where('user_id', $idUser)->where('forum_id', $selectedforum->id)->where('type', 'like')->exists();
-        $isdisliked = Status::where('user_id', $idUser)->where('forum_id', $selectedforum->id)->where('type', 'dislike')->exists();
-        $commentlike = Status::where('user_id', $idUser)->where('forum_id', $selectedforum->id)->where('comment_id', '<>', null)->where('type', 'like')->get();
-        $commentdislike = Status::where('user_id', $idUser)->where('forum_id', $selectedforum->id)->where('comment_id', '<>', null)->where('type', 'dislike')->get();
-        //dd($commentlike);
-        return view('halaman-forum', [
-            'forum' => $selectedforum,
-            'comments' => $comments,
-            'pinnedcomments' => $pinnedcomments,
-            'isliked' => $isliked,
-            'isdisliked' => $isdisliked,
-            'commentlike' => $commentlike,
-            'commentdislike' => $commentdislike,
-        ]);
+        $mustreadforum = Forum::all()->where('isPublished', true)->sortBy('like')->take(3);
+        if (Auth::check()) {
+            $idUser = auth()->user()->id;
+            $selectedforum = Forum::where('slug', $slug)->first();
+            $comments = Forum::find($selectedforum->id)->comments->where('isPinned', false);
+            $pinnedcomments = Forum::find($selectedforum->id)->comments->where('isPinned', true);
+            $isliked = Status::where('user_id', $idUser)->where('forum_id', $selectedforum->id)->where('comment_id', null)->where('type', 'like')->exists();
+            $isdisliked = Status::where('user_id', $idUser)->where('forum_id', $selectedforum->id)->where('comment_id', null)->where('type', 'dislike')->exists();
+            $commentlike = Status::where('user_id', $idUser)->where('forum_id', $selectedforum->id)->where('comment_id', '<>', null)->where('type', 'like')->get();
+            $commentdislike = Status::where('user_id', $idUser)->where('forum_id', $selectedforum->id)->where('comment_id', '<>', null)->where('type', 'dislike')->get();
+            //dd($commentlike);
+            return view('halaman-forum', [
+                'forum' => $selectedforum,
+                'comments' => $comments,
+                'pinnedcomments' => $pinnedcomments,
+                'isliked' => $isliked,
+                'isdisliked' => $isdisliked,
+                'commentlike' => $commentlike,
+                'commentdislike' => $commentdislike,
+                'mustreadforum' => $mustreadforum,
+            ]);
+        } else {
+            $selectedforum = Forum::where('slug', $slug)->first();
+            $comments = Forum::find($selectedforum->id)->comments->where('isPinned', false);
+            $pinnedcomments = Forum::find($selectedforum->id)->comments->where('isPinned', true);
+
+            return view('halaman-forum', [
+                'forum' => $selectedforum,
+                'comments' => $comments,
+                'pinnedcomments' => $pinnedcomments,
+                'mustreadforum' => $mustreadforum,
+            ]);
+        }
     }
 
     //by Devi
     //UC02.04 Create Forum
     public function displayCreatePage()
     {
-        return view('halaman-create');
+        $mustreadforum = Forum::all()->where('isPublished', true)->sortBy('like')->take(3);
+        return view('halaman-create', ['mustreadforum' => $mustreadforum]);
     }
 
     public function saveAndAdd(Request $request)
@@ -104,7 +163,7 @@ class ForumController extends Controller
             'category' => 'required',
         ]);
         Forum::create([
-            'user_id' => 1,
+            'user_id' => auth()->user()->id,
             'title' => $request->title,
             'body' => $request->body,
             'category' => $request->category,
@@ -127,7 +186,7 @@ class ForumController extends Controller
         ]);
 
         Forum::create([
-            'user_id' => 1,
+            'user_id' => auth()->user()->id,
             'title' => $request->title,
             'body' => $request->body,
             'category' => $request->category,
@@ -144,8 +203,9 @@ class ForumController extends Controller
     //UC02.05 Update/Delete Forum
     public function displayUpdatePage($id)
     {
+        $mustreadforum = Forum::all()->where('isPublished', true)->sortBy('like')->take(3);
         $selectedforum = Forum::find($id);
-        return view('halaman-update', ['forum' => $selectedforum]);
+        return view('halaman-update', ['forum' => $selectedforum, 'mustreadforum' => $mustreadforum]);
     }
 
     public function saveNew(Request $request)
@@ -183,7 +243,7 @@ class ForumController extends Controller
             'category' => 'required',
         ]);
 
-        $selectedforum = Forum::find($request->idForum)->first();
+        $selectedforum = Forum::find($request->idForum);
 
         Forum::where('id', $request->idForum)->update([
             'user_id' => $selectedforum->user_id,
@@ -202,8 +262,9 @@ class ForumController extends Controller
 
     public function deleteForum($id)
     {
-        Forum::find($id)->delete();
-
+        $forum = Forum::find($id);
+        $forum->comments()->delete();
+        $forum->delete();
         return redirect('/your-forum');
     }
 }
