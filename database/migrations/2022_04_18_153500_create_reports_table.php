@@ -14,11 +14,11 @@ class CreateReportsTable extends Migration
     public function up()
     {
         Schema::create('reports', function (Blueprint $table) {
-            $table->id('idReport');
-            $table->string('idComment');
-            $table->string('idUser');
-            $table->string('idForum');
-            $table->boolean('isReported');
+            $table->id('id');
+            $table->foreignId('comment_id')->nullable();
+            $table->foreignId('user_id');
+            $table->foreignId('forum_id');
+            $table->string('report')->nullable();
             $table->timestamps();
         });
     }

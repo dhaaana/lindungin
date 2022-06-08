@@ -8,38 +8,50 @@
             <div class="row mt-3">
                 <div class="col-lg-9">
                     <!--Bootstrap classes arrange web page components into columns and rows in a grid -->
-                    <form action="" method="POST" class="card p-4">
+                    <form action={{ '/update/forum/' . $forum->id }} method="POST" class="card p-4">
+                        @csrf
                         <div class="form-group">
+                            <input type="text" name="idForum" value="{{ $forum->id }}" hidden>
                             <label for="category" class="mb-2">Category <span class="require"></span></label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Select Category Here</option>
-                                <option value="1">Kuliner</option>
-                                <option value="2">Kesehatan</option>
-                                <option value="3">Politik</option>
-                                <option value="3">Pendidikan</option>
-                                <option value="3">Sosial</option>
+                            <select id="category" name="category" class="form-select" aria-label="Default select example">
+                                <option selected disabled hidden>Select Category Here</option>
+                                <option value="Kuliner" @if ($forum->category == 'Kuliner') selected @endif>Kuliner</option>
+                                <option value="Kesehatan" @if ($forum->category == 'Kesehatan') selected @endif>Kesehatan
+                                </option>
+                                <option value="Politik" @if ($forum->category == 'Politik') selected @endif>Politik</option>
+                                <option value="Pendidikan" @if ($forum->category == 'Pendidikan') selected @endif>Pendidikan
+                                </option>
+                                <option value="Sosial" @if ($forum->category == 'Sosial') selected @endif>Sosial</option>
                             </select>
-
+                            @error('category')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <br>
                         <div class="form-group">
                             <label for="title" class="mb-2">Title <span class="require"></span></label>
-                            <input type="text" class="form-control" placeholder="Title" name="title" />
+                            <input type="text" id='title' class="form-control" placeholder="Title" name="title"
+                                value="{{ $forum->title }}" />
+                            @error('title')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                             <br>
-                            <label class="mb-2" for="description">Content</label>
-                            <textarea rows="5" class="contents form-control" name="description"></textarea>
+                            <label class="mb-2" for="body">Content</label>
+                            <textarea value="{{ $forum->body }}" id="body" name="body" rows="5" class="contents form-control" name="description"></textarea>
+                            @error('body')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <br>
                         <div class="d-flex justify-content-end gap-2">
-                            <button type="button" class="btn-gray">
+                            <button type="submit" formaction={{ '/update/forum/' . $forum->id . '/draft' }}
+                                class="btn-gray">
                                 Save as Draft
                             </button>
                             <button type="submit" class="btn-blue">
                                 Publish
                             </button>
                         </div>
-
-
                 </div>
                 <div class="col-lg-3 mb-3 d-none d-lg-block sticky-right-side">
                     @include('partials.rightbar')
@@ -182,9 +194,6 @@
             // preview
             preview: false,
 
-            // placeholder
-            placeholder: 'Write content here..',
-
             // developer settings
             useSingleQuotes: false,
             height: 0,
@@ -197,5 +206,11 @@
             callback: undefined,
             useTabForNext: false
         });
+    </script>
+    <script>
+        const coba = {{ Illuminate\Support\Js::from($forum->body) }}
+        $(document).ready(function() {
+            $('.contents').val(coba).trigger('change')
+        })
     </script>
 @endsection

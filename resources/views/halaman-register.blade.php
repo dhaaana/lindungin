@@ -14,7 +14,8 @@
                             </p>
                             <!-- Username input -->
                             <div class="form-floating mb-3">
-                                <input type="text" name="username" required class="form-control" id="floatingInput">
+                                <input type="text" name="username" value="{{ old('username') }}" required
+                                    class="form-control" id="floatingInput">
                                 <label for="floatingInput">Username</label>
                                 @error('username')
                                     <div class="text-danger">{{ $message }}</div>
@@ -23,7 +24,8 @@
 
                             <!-- Fullname input -->
                             <div class="form-floating mb-3">
-                                <input type="text" name="name" required class="form-control" id="floatingInput">
+                                <input type="text" name="name" value="{{ old('name') }}" required class="form-control"
+                                    id="floatingInput">
                                 <label for="floatingInput">Fullname</label>
                                 @error('name')
                                     <div class="text-danger">{{ $message }}</div>
@@ -32,7 +34,8 @@
 
                             <!-- Email input -->
                             <div class="form-floating mb-3">
-                                <input type="email" name="email" required class="form-control" id="floatingInput">
+                                <input type="email" name="email" value="{{ old('email') }}" required class="form-control"
+                                    id="floatingInput">
                                 <label for="floatingInput">Email</label>
                                 @error('email')
                                     <div class="text-danger">{{ $message }}</div>
