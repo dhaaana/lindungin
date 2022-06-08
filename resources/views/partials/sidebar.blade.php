@@ -154,21 +154,25 @@
             </a>
         </li>
         @isset(auth()->user()->roles)
-            <li class="border-top my-3"></li>
-            <li class="text-xs text-secondary mb-2 ms-3 fw-bold">
-                Dashboard Navigator
-            </li>
-            <li class="mb-1">
-                <a class="link-unstyled" href="/dashboard">
-                    <button class="btn btn-toggle d-flex align-items-center text-start rounded collapsed">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icons" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg> Dashboard
-                    </button>
-                </a>
-            </li>
+            @if (auth()->user()->roles !== 'verifikator')
+            @else
+                <li class="border-top my-3"></li>
+                <li class="text-xs text-secondary mb-2 ms-3 fw-bold">
+                    Dashboard Navigator
+                </li>
+                <li class="mb-1">
+                    <a class="link-unstyled" href="/dashboard">
+                        <button class="btn btn-toggle d-flex align-items-center text-start rounded collapsed">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icons" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg> Dashboard
+                        </button>
+                    </a>
+                </li>
+            @endif
+
         @endisset
         <button class="position-absolute mb-3 mr-3 btn btn-light" data-bs-toggle="tooltip" onclick="toggleNav()"
             data-bs-placement="right" title="Close" style="bottom:0; right: 1.3rem;">

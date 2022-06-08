@@ -292,9 +292,15 @@
                                                 </svg>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item"
-                                                        href={{ '/unpin/comment/' . $comment->id }}>Unpin</a></li>
-                                                <li><button class="dropdown-item"
+                                                @isset(auth()->user()->roles)
+                                                    @if (auth()->user()->roles !== 'verifikator')
+                                                    @else
+                                                        <li><a class="dropdown-item"
+                                                                href={{ '/unpin/comment/' . $comment->id }}>Pin</a></li>
+                                                    @endif
+                                                @endisset
+                                                <li>
+                                                    <button class="dropdown-item"
                                                         onclick="navigator.clipboard.writeText(`${window.location.href}#{{ 'comment' . $comment->id }}`)">Share</button>
                                                 </li>
                                             </ul>
@@ -324,7 +330,7 @@
                                             <a href="#"
                                                 class="h5 m-0 link-unstyled text-dark border-sm-end">{{ $comment->user->name }}</a>
                                             <a href="#"
-                                                class="h7 text-muted link-unstyled border-sm-start">{{ '@' . $comment->user->name }}</a>
+                                                class="h7 text-muted link-unstyled border-sm-start">{{ '@' . $comment->user->username }}</a>
                                         </div>
                                         <div class="d-flex mt-1">
                                             <div class="text-muted text-xs m-0">Last Updated
@@ -404,8 +410,13 @@
                                         </svg>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href={{ '/pin/comment/' . $comment->id }}>Pin</a>
-                                        </li>
+                                        @isset(auth()->user()->roles)
+                                            @if (auth()->user()->roles !== 'verifikator')
+                                            @else
+                                                <li><a class="dropdown-item"
+                                                        href={{ '/pin/comment/' . $comment->id }}>Pin</a></li>
+                                            @endif
+                                        @endisset
                                         <li><button class="dropdown-item"
                                                 onclick="navigator.clipboard.writeText(`${window.location.href}#{{ 'comment' . $comment->id }}`)">Share</button>
                                         </li>

@@ -172,10 +172,12 @@
                                         <li><button class="dropdown-item"
                                                 onclick="navigator.clipboard.writeText(`${window.location.href}forum/{{ $forum->slug }}`)">Share</button>
                                         </li>
-                                        <li><button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target={{ '#reportModal' . $forum->id }}>
-                                                Report
-                                            </button></li>
+                                        @isset(auth()->user()->id)
+                                            <li><button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                                    data-bs-target={{ '#reportModal' . $forum->id }}>
+                                                    Report
+                                                </button></li>
+                                        @endisset
                                     </ul>
                                 </div>
                             </div>

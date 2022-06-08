@@ -7,37 +7,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href={{ url('https://fonts.googleapis.com') }}>
+    <link rel="preconnect" href={{ url('https://fonts.gstatic.com') }} crossorigin>
+    <link href={{ url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap') }}
+        rel="stylesheet">
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href={{ secure_asset('/favicon/apple-touch-icon.png') }}>
+    <link rel="icon" type="image/png" sizes="32x32" href={{ secure_asset('/favicon/favicon-32x32.png') }}>
+    <link rel="icon" type="image/png" sizes="16x16" href={{ secure_asset('/favicon/favicon-16x16.png') }}>
+    <link rel="manifest" href={{ secure_asset('/favicon/site.webmanifest') }}>
 
 
     <!-- Style -->
-    <link rel="stylesheet" href={{ asset('css/main.css') }}>
+    <link rel="stylesheet" href={{ secure_asset('/css/main.css') }}>
 
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    <link href={{ url('https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css') }} rel="stylesheet">
+    <script src={{ url('https://code.jquery.com/jquery-3.6.0.min.js') }}
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src={{ url('https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js') }}></script>
 
     <!-- Font Awesome -->
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href={{ url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css') }}
+        rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous">
 
     <!-- Jquery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    <script src={{ url('https://code.jquery.com/jquery-3.6.0.min.js') }}
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <!-- RichText -->
-    <link rel="stylesheet" href={{ asset('css/richtext.min.css') }}>
-    <script src={{ asset('js/jquery.richtext.min.js') }}></script>
+    <link rel="stylesheet" href={{ secure_asset('/css/richtext.min.css') }}>
+    <script src={{ secure_asset('/js/jquery.richtext.min.js') }}></script>
 
 </head>
 

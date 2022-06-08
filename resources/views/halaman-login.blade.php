@@ -7,13 +7,13 @@
             <div class="col-lg-5">
                 <div class="container p-sm-5 h-100">
                     <div class="row d-flex align-items-center justify-content-center h-100 p-sm-4">
-                        <form action="{{route('login')}}" method="post" class="needs-validation" novalidate>
+                        <form action="{{ route('login') }}" method="post" novalidate>
                             @csrf
                             <h4 class="fw-bold">We've Missed You!</h4>
                             <p class="text-muted py-2">More than 100+ forums are waiting for your wise comments!</p>
                             <!-- Email input -->
                             <div class="form-floating mb-3">
-                                <input type="text" name="email" required class="form-control" id="floatingInput" placeholder="dhana">
+                                <input type="text" name="email" required class="form-control" id="floatingInput">
                                 <label for="floatingInput">Email</label>
                                 @error('email')
                                     <div class="text-danger">{{ $message }}</div>
@@ -22,9 +22,8 @@
 
                             <!-- Password input -->
                             <div class="form-floating mb-3">
-                                <input type="password" name="password" required class="form-control" id="floatingInput"
-                                    placeholder="dhana">
-                                <label for="floatingInput">Password</label>
+                                <input type="password" name="password" required class="form-control" id="floatingInputa">
+                                <label for="floatingInputa">Password</label>
                                 @error('password')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -36,7 +35,8 @@
                             </div>
                             <br>
                             <div class="d-flex justify-content-center align-items-center mb-4">
-                                Forgot password?<a class="link-unstyled underline-link text-primary fw-bold ms-1" href="/forgot-password">
+                                Forgot password?<a class="link-unstyled underline-link text-primary fw-bold ms-1"
+                                    href="/forgot-password">
                                     Press
                                     Here</a>
                             </div>
