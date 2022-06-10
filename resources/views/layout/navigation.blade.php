@@ -13,14 +13,14 @@
         rel="stylesheet">
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href={{ secure_asset('/favicon/apple-touch-icon.png') }}>
-    <link rel="icon" type="image/png" sizes="32x32" href={{ secure_asset('/favicon/favicon-32x32.png') }}>
-    <link rel="icon" type="image/png" sizes="16x16" href={{ secure_asset('/favicon/favicon-16x16.png') }}>
-    <link rel="manifest" href={{ secure_asset('/favicon/site.webmanifest') }}>
+    <link rel="apple-touch-icon" sizes="180x180" href={{ asset('/favicon/apple-touch-icon.png') }}>
+    <link rel="icon" type="image/png" sizes="32x32" href={{ asset('/favicon/favicon-32x32.png') }}>
+    <link rel="icon" type="image/png" sizes="16x16" href={{ asset('/favicon/favicon-16x16.png') }}>
+    <link rel="manifest" href={{ asset('/favicon/site.webmanifest') }}>
 
 
     <!-- Style -->
-    <link rel="stylesheet" href={{ secure_asset('/css/main.css') }}>
+    <link rel="stylesheet" href={{ asset('/css/main.css') }}>
 
     <!-- Bootstrap -->
     <link href={{ url('https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css') }} rel="stylesheet">
@@ -38,8 +38,8 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <!-- RichText -->
-    <link rel="stylesheet" href={{ secure_asset('/css/richtext.min.css') }}>
-    <script src={{ secure_asset('/js/jquery.richtext.min.js') }}></script>
+    <link rel="stylesheet" href={{ asset('/css/richtext.min.css') }}>
+    <script src={{ asset('/js/jquery.richtext.min.js') }}></script>
 
 </head>
 
